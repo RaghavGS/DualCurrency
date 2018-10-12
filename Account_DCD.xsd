@@ -43,6 +43,7 @@
         <xs:sequence>
             <xs:element ref="account_Id" />
             <xs:element ref="customer_Id" />
+            <xs:element name="Status" type="xs:string" />
         </xs:sequence>
     </xs:complexType>
     <xs:element name="customer_Id">
