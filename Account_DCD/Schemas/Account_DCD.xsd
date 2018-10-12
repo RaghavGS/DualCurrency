@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://smubank.smu.edu.sg/schemas/Account_DCD"
+	 targetNamespace="http://smubank.smu.edu.sg/schemas/Account_DCD"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+
+    <xs:complexType name="Account_DCD_Read-Request">
+        <xs:sequence>
+            <xs:element ref="accountID" />
+            <xs:element ref="customerID" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Account_DCD_Read-Response">
+        <xs:sequence>
+            <xs:element ref="accountID" />
+            <xs:element ref="customerID" />
+            <xs:element ref="interestRate" />
+            <xs:element ref="primaryCurr" />
+            <xs:element ref="secondaryCurr" />
+            <xs:element ref="startDate" />
+            <xs:element ref="maturityDate" />
+            <xs:element ref="termPeriod" />
+            <xs:element ref="penaltyRate" />
+            <xs:element ref="depositAmount" />
+            <xs:element ref="strikeRate" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Account_DCD_Create-Request">
+        <xs:sequence>
+            <xs:element ref="customerID" />
+            <xs:element ref="interestRate" />
+            <xs:element ref="primaryCurr" />
+            <xs:element ref="secondaryCurr" />
+            <xs:element ref="startDate" />
+            <xs:element ref="maturityDate" />
+            <xs:element ref="termPeriod" />
+            <xs:element ref="penaltyRate" />
+            <xs:element ref="depositAmount" />
+            <xs:element ref="termPeriod" />
+            <xs:element ref="strikeRate" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Account_DCD_Create-Response">
+        <xs:sequence>
+            <xs:element ref="accountID" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Account_DCD_Update-Request">
+        <xs:sequence>
+            <xs:element ref="accountID" />
+            <xs:element ref="customerID" />
+            <xs:element name="Status" type="xs:string" />
+        </xs:sequence>
+    </xs:complexType>
+    
+    
+    <xs:element name="customerID">
+        <xs:simpleType>
+            <xs:restriction base="xs:int">
+                <xs:totalDigits value="10" />
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+    <xs:element name="accountID">
+        <xs:simpleType>
+            <xs:restriction base="xs:int">
+                <xs:totalDigits value="10" />
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+    <xs:element name="interestRate" type="xs:decimal" />
+    <xs:element name="primaryCurr" type="xs:string" />
+    <xs:element name="secondaryCurr" type="xs:string" />
+    <xs:element name="startDate" type="xs:date" />
+    <xs:element name="maturityDate" type="xs:date" />
+    <xs:element name="depositAmount" type="xs:decimal" />
+    <xs:element name="termPeriod">
+        <xs:simpleType>
+            <xs:restriction base="xs:int">
+                <xs:totalDigits value="11" />
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+    <xs:element name="strikeRate" type="xs:decimal" />
+    <xs:element name="penaltyRate" type="xs:decimal" />
+</xs:schema>

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<serviceResource xmlns:wsdl="http://smubank.smu.edu.sg/Account_DCD">
+    <ns0:import xmlns:ns0="http://schemas.xmlsoap.org/wsdl/" namespace="http://smubank.smu.edu.sg/Account_DCD" location="/Account_DCD.wsdl"/>
+    <config>
+        <class>com.tibco.bw.service.serviceAgent.ServiceServiceAgent</class>
+        <implType>bw</implType>
+        <groups>
+            <row isDefault="true" groupName="Default"/>
+        </groups>
+        <serviceChange>Fri Oct 12 17:21:39 SGT 2018</serviceChange>
+        <name>Account_DCD</name>
+        <resourceType>service.definition</resourceType>
+        <interfaceImpl>
+            <tab>
+                <tabName>Account_DCD</tabName>
+                <tabType>bw</tabType>
+                <config>
+                    <wsdlDetail location="/Account_DCD.wsdl" portType="Account_DCD" ns="http://smubank.smu.edu.sg/Account_DCD"/>
+                    <detail>
+                        <tab>
+                            <tabName>service.definition.impl.tab.label</tabName>
+                            <tabType>impl</tabType>
+                            <config>
+                                <operations>
+                                    <row opName="Account_DCD_Read" opImpl="/Account_DCD_Read.process"/>
+                                    <row opName="Account_DCD_Create" opImpl="/Account_DCD_Create.process"/>
+                                    <row opName="Account_DCD_Update" opImpl="/Account_DCD_Update.process"/>
+                                </operations>
+                            </config>
+                        </tab>
+                        <tab>
+                            <tabName>service.definition.ep.tab.label</tabName>
+                            <tabType>ep</tabType>
+                            <config>
+                                <epBindings>
+                                    <row epName="Account_DCD_HTTPEndpoint" epType="soap">
+                                        <config>
+                                            <epDetail>
+                                                <tab>
+                                                    <tabName>soap.service.transport.ui.transport.tab.label</tabName>
+                                                    <tabType>transport</tabType>
+                                                    <config>
+                                                        <sharedChannel>/Connections/HTTP Connection.sharedhttp</sharedChannel>
+                                                        <transport>
+                                                            <config>
+                                                                <useBasicAuthentication>false</useBasicAuthentication>
+                                                                <httpURI>/Account_DCD.serviceagent/Account_DCD_HTTPEndpoint</httpURI>
+                                                            </config>
+                                                        </transport>
+                                                    </config>
+                                                </tab>
+                                                <tab>
+                                                    <tabName>soap.service.transport.ui.details.tab.label</tabName>
+                                                    <tabType>details</tabType>
+                                                    <config>
+                                                        <operationStyle>rpc</operationStyle>
+                                                        <soapVersion>SOAP 1.1</soapVersion>
+                                                        <soap>
+                                                            <operation name="Account_DCD_Read">
+                                                                <general>
+                                                                    <config>
+                                                                        <soapAction>/Account_DCD.serviceagent/Account_DCD_HTTPEndpoint/Account_DCD_Read</soapAction>
+                                                                        <operationStyle>rpc</operationStyle>
+                                                                        <soapUse>literal</soapUse>
+                                                                        <inputNamespace/>
+                                                                        <outputNamespace/>
+                                                                        <faultNamespace/>
+                                                                        <portAddressPrefix/>
+                                                                    </config>
+                                                                </general>
+                                                            </operation>
+                                                            <operation name="Account_DCD_Create">
+                                                                <general>
+                                                                    <config>
+                                                                        <soapAction>/Account_DCD.serviceagent/Account_DCD_HTTPEndpoint/Account_DCD_Create</soapAction>
+                                                                        <operationStyle>rpc</operationStyle>
+                                                                        <soapUse>literal</soapUse>
+                                                                        <inputNamespace/>
+                                                                        <outputNamespace/>
+                                                                        <faultNamespace/>
+                                                                        <portAddressPrefix/>
+                                                                    </config>
+                                                                </general>
+                                                            </operation>
+                                                            <operation name="Account_DCD_Update">
+                                                                <general>
+                                                                    <config>
+                                                                        <soapAction>/Account_DCD.serviceagent/Account_DCD_HTTPEndpoint/Account_DCD_Update</soapAction>
+                                                                        <operationStyle>rpc</operationStyle>
+                                                                        <soapUse>literal</soapUse>
+                                                                        <inputNamespace/>
+                                                                        <outputNamespace/>
+                                                                        <faultNamespace/>
+                                                                        <portAddressPrefix/>
+                                                                    </config>
+                                                                </general>
+                                                            </operation>
+                                                        </soap>
+                                                    </config>
+                                                </tab>
+                                            </epDetail>
+                                        </config>
+                                    </row>
+                                    <row epName="Account_DCD_JMSEndpoint" epType="soap">
+                                        <config>
+                                            <epDetail>
+                                                <tab>
+                                                    <tabName>soap.service.transport.ui.transport.tab.label</tabName>
+                                                    <tabType>transport</tabType>
+                                                    <config>
+                                                        <sharedChannel>/Connections/JMS Connection.sharedjmscon</sharedChannel>
+                                                        <transport>
+                                                            <config>
+                                                                <JMSTo>account.endpoint</JMSTo>
+                                                                <JMSDestinationType>queue</JMSDestinationType>
+                                                                <JMSMessageType>Text</JMSMessageType>
+                                                                <JMSAcknowledgementMode>1</JMSAcknowledgementMode>
+                                                                <ApplicationProperties/>
+                                                                <ApplicationPropertiesOutMessage/>
+                                                                <JMSMaxSessions/>
+                                                                <operations>
+                                                                    <operation name="Account_DCD_Read">
+                                                                        <general>
+                                                                            <config>
+                                                                                <JMSDurable>false</JMSDurable>
+                                                                                <JMSDurableName/>
+                                                                            </config>
+                                                                        </general>
+                                                                    </operation>
+                                                                    <operation name="Account_DCD_Create"/>
+                                                                    <operation name="Account_DCD_Update"/>
+                                                                </operations>
+                                                            </config>
+                                                        </transport>
+                                                    </config>
+                                                </tab>
+                                                <tab>
+                                                    <tabName>soap.service.transport.ui.details.tab.label</tabName>
+                                                    <tabType>details</tabType>
+                                                    <config>
+                                                        <operationStyle>rpc</operationStyle>
+                                                        <soapVersion>SOAP 1.1</soapVersion>
+                                                        <soap>
+                                                            <operation name="Account_DCD_Read">
+                                                                <general>
+                                                                    <config>
+                                                                        <soapAction>/Account_DCD.serviceagent/Account_DCD_JMSEndpoint/Account_DCD_Read</soapAction>
+                                                                        <operationStyle>rpc</operationStyle>
+                                                                        <soapUse>literal</soapUse>
+                                                                        <inputNamespace/>
+                                                                        <outputNamespace/>
+                                                                        <faultNamespace/>
+                                                                        <portAddressPrefix/>
+                                                                    </config>
+                                                                </general>
+                                                            </operation>
+                                                            <operation name="Account_DCD_Create">
+                                                                <general>
+                                                                    <config>
+                                                                        <soapAction>/Account_DCD.serviceagent/Account_DCD_JMSEndpoint/Account_DCD_Create</soapAction>
+                                                                        <operationStyle>rpc</operationStyle>
+                                                                        <soapUse>literal</soapUse>
+                                                                        <inputNamespace/>
+                                                                        <outputNamespace/>
+                                                                        <faultNamespace/>
+                                                                        <portAddressPrefix/>
+                                                                    </config>
+                                                                </general>
+                                                            </operation>
+                                                            <operation name="Account_DCD_Update">
+                                                                <general>
+                                                                    <config>
+                                                                        <soapAction>/Account_DCD.serviceagent/Account_DCD_JMSEndpoint/Account_DCD_Update</soapAction>
+                                                                        <operationStyle>rpc</operationStyle>
+                                                                        <soapUse>literal</soapUse>
+                                                                        <inputNamespace/>
+                                                                        <outputNamespace/>
+                                                                        <faultNamespace/>
+                                                                        <portAddressPrefix/>
+                                                                    </config>
+                                                                </general>
+                                                            </operation>
+                                                        </soap>
+                                                    </config>
+                                                </tab>
+                                            </epDetail>
+                                        </config>
+                                    </row>
+                                </epBindings>
+                            </config>
+                        </tab>
+                    </detail>
+                </config>
+            </tab>
+        </interfaceImpl>
+        <wsdl namespace="http://smubank.smu.edu.sg/Account_DCD" embedWsdlComponents="true" embedSchemaComponents="true" embedJndiProperties="false"/>
+    </config>
+</serviceResource>

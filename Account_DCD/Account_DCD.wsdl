@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:ns2="http://smubank.smu.edu.sg/schemas/Account_DCD" xmlns:ns4="http://smubank.smu.edu.sg/schemas/serviceRequestMessage/" xmlns:ns="http://smubank.smu.edu.sg/schemas/DualCurrency" xmlns:ns3="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" xmlns:tns="http://smubank.smu.edu.sg/Account_DCD" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://smubank.smu.edu.sg/Account_DCD">
+    <import namespace="http://smubank.smu.edu.sg/schemas/Account_DCD" location="Schemas/Account_DCD.xsd"/>
+    <import namespace="http://smubank.smu.edu.sg/schemas/serviceRequestMessage/" location="Schemas/ServiceReqMessage.xsd"/>
+    <import namespace="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" location="Schemas/ServiceRespHeader.xsd"/>
+    <message name="Account_DCD_Read-Input">
+        <part name="ServiceReqHeader" type="ns4:ServiceReqHeader"/>
+        <part name="Account_DCD_Read-Request" type="ns2:Account_DCD_Read-Request"/>
+    </message>
+    <message name="Account_DCD_Read-Output">
+        <part name="ServiceRespHeader" type="ns3:ServiceRespHeader"/>
+        <part name="Account_DCD_Read-Response" type="ns2:Account_DCD_Read-Response"/>
+    </message>
+    <message name="Account_DCD_Create-Input">
+        <part name="ServiceReqHeader" type="ns4:ServiceReqHeader"/>
+        <part name="Account_DCD_Create-Request" type="ns2:Account_DCD_Create-Request"/>
+    </message>
+    <message name="Account_DCD_Update-Input">
+        <part name="ServiceReqHeader" type="ns4:ServiceReqHeader"/>
+        <part name="Account_DCD_Update-Request" type="ns2:Account_DCD_Update-Request"/>
+    </message>
+    <message name="Account_DCD_Create_Output">
+        <part name="ServiceRespHeader" type="ns3:ServiceRespHeader"/>
+        <part name="Account_DCD_Create-Response" type="ns2:Account_DCD_Create-Response"/>
+    </message>
+    <portType name="Account_DCD">
+        <operation name="Account_DCD_Read">
+            <input message="tns:Account_DCD_Read-Input"/>
+            <output message="tns:Account_DCD_Read-Output"/>
+        </operation>
+        <operation name="Account_DCD_Create">
+            <input message="tns:Account_DCD_Create-Input"/>
+            <output message="tns:Account_DCD_Create_Output"/>
+        </operation>
+        <operation name="Account_DCD_Update">
+            <input message="tns:Account_DCD_Update-Input"/>
+        </operation>
+    </portType>
+</definitions>

@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="2811bff5-0861-474f-83b2-541e9a119133" activeEnvironment="Default" name="SMUtBank" resourceRoot="" soapui-version="5.4.0" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="4092f653-960a-4ac5-aa81-f4b66b197d07" wsaVersion="NONE" name="Account_DCD_HTTPEndpointBinding" type="wsdl" bindingName="{http://smubank.smu.edu.sg/Account_DCD}Account_DCD_HTTPEndpointBinding" soapVersion="1_1" anonymous="optional" definition="file:/C:/Users/tskau/Desktop/Account_DCD.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/C:/Users/tskau/Desktop/Account_DCD.wsdl"><con:part><con:url>file:/C:/Users/tskau/Desktop/Account_DCD.wsdl</con:url><con:content><![CDATA[<!--Created by TIBCO WSDL-->
+<wsdl:definitions name="Untitled" targetNamespace="http://smubank.smu.edu.sg/Account_DCD" xmlns:ns2="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" xmlns:ns1="http://smubank.smu.edu.sg/schemas/Account_DCD" xmlns:tns="http://smubank.smu.edu.sg/Account_DCD" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns0="http://smubank.smu.edu.sg/schemas/serviceRequestMessage/" xmlns:jms="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS" xmlns:soap1="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:jndi="http://www.tibco.com/namespaces/ws/2004/soap/apis/jndi">
+  <wsdl:types>
+    <xs:schema targetNamespace="http://smubank.smu.edu.sg/schemas/serviceRequestMessage/" elementFormDefault="unqualified" attributeFormDefault="unqualified" xmlns:tns="http://smubank.smu.edu.sg/schemas/serviceRequestMessage/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:complexType name="Content">
+        <xs:sequence>
+          <xs:element ref="tns:ServiceReqHeader"/>
+          <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax" namespace="##any"/>
+        </xs:sequence>
+        <xs:anyAttribute processContents="lax" namespace="##any"/>
+      </xs:complexType>
+      <xs:complexType name="ServiceReqHeader">
+        <xs:sequence>
+          <xs:element name="ConsumerID" type="xs:string"/>
+          <xs:element name="TransactionID" type="xs:string"/>
+          <xs:element name="RequestUUID" type="xs:string"/>
+          <xs:element name="OperationName" type="xs:string"/>
+          <xs:element name="Priority" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Content" type="tns:Content"/>
+      <xs:element name="ServiceReqHeader" type="tns:ServiceReqHeader"/>
+    </xs:schema>
+    <xs:schema targetNamespace="http://smubank.smu.edu.sg/schemas/Account_DCD" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns="http://smubank.smu.edu.sg/schemas/Account_DCD" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:complexType name="Account_DCD_Create-Request">
+        <xs:sequence>
+          <xs:element ref="ns1:customerID"/>
+          <xs:element ref="ns1:interestRate"/>
+          <xs:element ref="ns1:primaryCurr"/>
+          <xs:element ref="ns1:secondaryCurr"/>
+          <xs:element ref="ns1:startDate"/>
+          <xs:element ref="ns1:maturityDate"/>
+          <xs:element ref="ns1:termPeriod"/>
+          <xs:element ref="ns1:penaltyRate"/>
+          <xs:element ref="ns1:depositAmount"/>
+          <xs:element ref="ns1:termPeriod"/>
+          <xs:element ref="ns1:strikeRate"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Account_DCD_Create-Response">
+        <xs:sequence>
+          <xs:element ref="ns1:accountID"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Account_DCD_Read-Request">
+        <xs:sequence>
+          <xs:element ref="ns1:accountID"/>
+          <xs:element ref="ns1:customerID"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Account_DCD_Read-Response">
+        <xs:sequence>
+          <xs:element ref="ns1:accountID"/>
+          <xs:element ref="ns1:customerID"/>
+          <xs:element ref="ns1:interestRate"/>
+          <xs:element ref="ns1:primaryCurr"/>
+          <xs:element ref="ns1:secondaryCurr"/>
+          <xs:element ref="ns1:startDate"/>
+          <xs:element ref="ns1:maturityDate"/>
+          <xs:element ref="ns1:termPeriod"/>
+          <xs:element ref="ns1:penaltyRate"/>
+          <xs:element ref="ns1:depositAmount"/>
+          <xs:element ref="ns1:strikeRate"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Account_DCD_Update-Request">
+        <xs:sequence>
+          <xs:element ref="ns1:accountID"/>
+          <xs:element ref="ns1:customerID"/>
+          <xs:element name="Status" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="accountID">
+        <xs:simpleType>
+          <xs:restriction base="xs:int">
+            <xs:totalDigits value="10"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="customerID">
+        <xs:simpleType>
+          <xs:restriction base="xs:int">
+            <xs:totalDigits value="10"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="depositAmount" type="xs:decimal"/>
+      <xs:element name="interestRate" type="xs:decimal"/>
+      <xs:element name="maturityDate" type="xs:date"/>
+      <xs:element name="penaltyRate" type="xs:decimal"/>
+      <xs:element name="primaryCurr" type="xs:string"/>
+      <xs:element name="secondaryCurr" type="xs:string"/>
+      <xs:element name="startDate" type="xs:date"/>
+      <xs:element name="strikeRate" type="xs:decimal"/>
+      <xs:element name="termPeriod">
+        <xs:simpleType>
+          <xs:restriction base="xs:int">
+            <xs:totalDigits value="11"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:schema>
+    <xs:schema targetNamespace="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:complexType name="ServiceRespHeader">
+        <xs:sequence>
+          <xs:element ref="ns2:GlobalErrorID"/>
+          <xs:element ref="ns2:ErrorText"/>
+          <xs:element ref="ns2:ErrorDetails"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ErrorDetails" type="xs:string"/>
+      <xs:element name="ErrorText" type="xs:string"/>
+      <xs:element name="GlobalErrorID" type="xs:string"/>
+      <xs:element name="ServiceRespHeader" type="ns2:ServiceRespHeader"/>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:service name="Account_DCD">
+    <wsdl:port name="Account_DCD_HTTPEndpoint" binding="tns:Account_DCD_HTTPEndpointBinding">
+      <soap:address location="http://localhost:9091/Account_DCD.serviceagent/Account_DCD_HTTPEndpoint"/>
+    </wsdl:port>
+    <wsdl:port name="Account_DCD_JMSEndpoint" binding="tns:Account_DCD_JMSEndpointBinding">
+      <soap:address location=""/>
+      <jms:connectionFactory>SMUBankQueueConnectionFactory</jms:connectionFactory>
+      <jms:targetAddress destination="queue">account.endpoint</jms:targetAddress>
+    </wsdl:port>
+  </wsdl:service>
+  <wsdl:portType name="Account_DCD">
+    <wsdl:operation name="Account_DCD_Create">
+      <wsdl:input message="tns:Account_DCD_Create-Input"/>
+      <wsdl:output message="tns:Account_DCD_Create_Output"/>
+    </wsdl:operation>
+    <wsdl:operation name="Account_DCD_Read">
+      <wsdl:input message="tns:Account_DCD_Read-Input"/>
+      <wsdl:output message="tns:Account_DCD_Read-Output"/>
+    </wsdl:operation>
+    <wsdl:operation name="Account_DCD_Update">
+      <wsdl:input message="tns:Account_DCD_Update-Input"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="Account_DCD_HTTPEndpointBinding" type="tns:Account_DCD">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="Account_DCD_Create">
+      <soap:operation style="rpc" soapAction="/Account_DCD.serviceagent/Account_DCD_HTTPEndpoint/Account_DCD_Create"/>
+      <wsdl:input>
+        <soap:body use="literal" parts="ServiceReqHeader Account_DCD_Create-Request"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" parts="ServiceRespHeader Account_DCD_Create-Response"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Account_DCD_Read">
+      <soap:operation style="rpc" soapAction="/Account_DCD.serviceagent/Account_DCD_HTTPEndpoint/Account_DCD_Read"/>
+      <wsdl:input>
+        <soap:body use="literal" parts="ServiceReqHeader Account_DCD_Read-Request"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" parts="ServiceRespHeader Account_DCD_Read-Response"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Account_DCD_Update">
+      <soap:operation style="rpc" soapAction="/Account_DCD.serviceagent/Account_DCD_HTTPEndpoint/Account_DCD_Update"/>
+      <wsdl:input>
+        <soap:body use="literal" parts="ServiceReqHeader Account_DCD_Update-Request"/>
+      </wsdl:input>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="Account_DCD_JMSEndpointBinding" type="tns:Account_DCD">
+    <soap:binding style="rpc" transport="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS"/>
+    <jms:binding messageFormat="Text"/>
+    <wsdl:operation name="Account_DCD_Create">
+      <soap:operation style="rpc" soapAction="/Account_DCD.serviceagent/Account_DCD_JMSEndpoint/Account_DCD_Create"/>
+      <wsdl:input>
+        <soap:body use="literal" parts="ServiceReqHeader Account_DCD_Create-Request"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" parts="ServiceRespHeader Account_DCD_Create-Response"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Account_DCD_Read">
+      <soap:operation style="rpc" soapAction="/Account_DCD.serviceagent/Account_DCD_JMSEndpoint/Account_DCD_Read"/>
+      <wsdl:input>
+        <soap:body use="literal" parts="ServiceReqHeader Account_DCD_Read-Request"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" parts="ServiceRespHeader Account_DCD_Read-Response"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Account_DCD_Update">
+      <soap:operation style="rpc" soapAction="/Account_DCD.serviceagent/Account_DCD_JMSEndpoint/Account_DCD_Update"/>
+      <wsdl:input>
+        <soap:body use="literal" parts="ServiceReqHeader Account_DCD_Update-Request"/>
+      </wsdl:input>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:message name="Account_DCD_Create-Input">
+    <wsdl:part name="ServiceReqHeader" type="ns0:ServiceReqHeader"/>
+    <wsdl:part name="Account_DCD_Create-Request" type="ns1:Account_DCD_Create-Request"/>
+  </wsdl:message>
+  <wsdl:message name="Account_DCD_Create_Output">
+    <wsdl:part name="ServiceRespHeader" type="ns2:ServiceRespHeader"/>
+    <wsdl:part name="Account_DCD_Create-Response" type="ns1:Account_DCD_Create-Response"/>
+  </wsdl:message>
+  <wsdl:message name="Account_DCD_Read-Input">
+    <wsdl:part name="ServiceReqHeader" type="ns0:ServiceReqHeader"/>
+    <wsdl:part name="Account_DCD_Read-Request" type="ns1:Account_DCD_Read-Request"/>
+  </wsdl:message>
+  <wsdl:message name="Account_DCD_Read-Output">
+    <wsdl:part name="ServiceRespHeader" type="ns2:ServiceRespHeader"/>
+    <wsdl:part name="Account_DCD_Read-Response" type="ns1:Account_DCD_Read-Response"/>
+  </wsdl:message>
+  <wsdl:message name="Account_DCD_Update-Input">
+    <wsdl:part name="ServiceReqHeader" type="ns0:ServiceReqHeader"/>
+    <wsdl:part name="Account_DCD_Update-Request" type="ns1:Account_DCD_Update-Request"/>
+  </wsdl:message>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:9091/Account_DCD.serviceagent/Account_DCD_HTTPEndpoint</con:endpoint></con:endpoints><con:operation id="2aa1d950-da5d-4af4-a235-fcd411308df9" isOneWay="false" action="/Account_DCD.serviceagent/Account_DCD_HTTPEndpoint/Account_DCD_Create" name="Account_DCD_Create" bindingOperationName="Account_DCD_Create" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="f7952d98-3099-4750-bc49-0acd97f826c9" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:9091/Account_DCD.serviceagent/Account_DCD_HTTPEndpoint</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:acc="http://smubank.smu.edu.sg/Account_DCD" xmlns:acc1="http://smubank.smu.edu.sg/schemas/Account_DCD">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <acc:Account_DCD_Create>
+         <ServiceReqHeader>
+            <ConsumerID>RIB</ConsumerID>
+            <TransactionID>1234</TransactionID>
+            <RequestUUID>2345</RequestUUID>
+            <OperationName>Account_DCD_Create</OperationName>
+            <Priority>4</Priority>
+         </ServiceReqHeader>
+         <Account_DCD_Create-Request>
+            <acc1:customerID>1234</acc1:customerID>
+            <acc1:interestRate>1.1</acc1:interestRate>
+            <acc1:primaryCurr>SGD</acc1:primaryCurr>
+            <acc1:secondaryCurr>GBP</acc1:secondaryCurr>
+            <acc1:startDate>1995-05-31</acc1:startDate>
+            <acc1:maturityDate>1996-05-31</acc1:maturityDate>
+            <acc1:termPeriod>1</acc1:termPeriod>
+            <acc1:penaltyRate>1.4</acc1:penaltyRate>
+            <acc1:depositAmount>1000.0</acc1:depositAmount>
+            <acc1:termPeriod>1</acc1:termPeriod>
+            <acc1:strikeRate>1.3</acc1:strikeRate>
+         </Account_DCD_Create-Request>
+      </acc:Account_DCD_Create>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="/Account_DCD.serviceagent/Account_DCD_HTTPEndpoint/Account_DCD_Create"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="a19580ef-8262-43d9-8407-d0f88a03e9f5" isOneWay="false" action="/Account_DCD.serviceagent/Account_DCD_HTTPEndpoint/Account_DCD_Read" name="Account_DCD_Read" bindingOperationName="Account_DCD_Read" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="d85ee239-9b14-4c5a-b5ee-da6b8136e099" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:9091/Account_DCD.serviceagent/Account_DCD_HTTPEndpoint</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:acc="http://smubank.smu.edu.sg/Account_DCD" xmlns:acc1="http://smubank.smu.edu.sg/schemas/Account_DCD">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <acc:Account_DCD_Read>
+         <ServiceReqHeader>
+            <ConsumerID>RIB</ConsumerID>
+            <TransactionID>1234</TransactionID>
+            <RequestUUID>2345</RequestUUID>
+            <OperationName>Account_DCD_Read</OperationName>
+            <Priority>?</Priority>
+         </ServiceReqHeader>
+         <Account_DCD_Read-Request>
+            <acc1:accountID>1234</acc1:accountID>
+            <acc1:customerID>1234</acc1:customerID>
+         </Account_DCD_Read-Request>
+      </acc:Account_DCD_Read>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="/Account_DCD.serviceagent/Account_DCD_HTTPEndpoint/Account_DCD_Read"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="deb67642-1cf4-4f1a-a9a9-7bf55a10af44" isOneWay="false" action="/Account_DCD.serviceagent/Account_DCD_HTTPEndpoint/Account_DCD_Update" name="Account_DCD_Update" bindingOperationName="Account_DCD_Update" type="One-Way" inputName="" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="303c72aa-0461-476f-8c30-078b1c791585" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:9091/Account_DCD.serviceagent/Account_DCD_HTTPEndpoint</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:acc="http://smubank.smu.edu.sg/Account_DCD" xmlns:acc1="http://smubank.smu.edu.sg/schemas/Account_DCD">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <acc:Account_DCD_Update>
+         <ServiceReqHeader>
+            <ConsumerID>?</ConsumerID>
+            <TransactionID>?</TransactionID>
+            <RequestUUID>?</RequestUUID>
+            <OperationName>?</OperationName>
+            <Priority>?</Priority>
+         </ServiceReqHeader>
+         <Account_DCD_Update-Request>
+            <acc1:accountID>?</acc1:accountID>
+            <acc1:customerID>?</acc1:customerID>
+            <acc1:Status>?</acc1:Status>
+         </Account_DCD_Update-Request>
+      </acc:Account_DCD_Update>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="/Account_DCD.serviceagent/Account_DCD_HTTPEndpoint/Account_DCD_Update"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>

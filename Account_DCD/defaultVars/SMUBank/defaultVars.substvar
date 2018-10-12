@@ -1,0 +1,45 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<repository xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xmlns = "http://www.tibco.com/xmlns/repo/types/2002">
+	<globalVariables>
+		<globalVariable>
+			<name>HTTP-Port</name>
+			<value>9091</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1539335655482</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>JDBC-Password</name>
+			<value></value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1539335655505</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>JDBC-Username</name>
+			<value>root</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1539335680516</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>JMS-Password</name>
+			<value></value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1539335655498</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>JMS-Username</name>
+			<value>admin</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1539335655491</modTime>
+		</globalVariable>
+	</globalVariables>
+</repository>

@@ -1,0 +1,45 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<repository xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xmlns = "http://www.tibco.com/xmlns/repo/types/2002">
+	<globalVariables>
+		<globalVariable>
+			<name>LogAll</name>
+			<value>true</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1539337161970</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>LogPt3</name>
+			<value>false</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1539337161984</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>LogPt4</name>
+			<value>false</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1539337162010</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>LogPt5</name>
+			<value>false</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1539337162022</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>LogPt6</name>
+			<value>false</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1539337161998</modTime>
+		</globalVariable>
+	</globalVariables>
+</repository>

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://smubank.smu.edu.sg/DualCurrency" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://smubank.smu.edu.sg/DualCurrency">
-    <message name="Account_DCD_Read-Request"/>
-    <message name="Account_DCD_Read-Response"/>
-    <message name="Account_DCD_Create-Request"/>
-    <message name="Account_DCD_Update-Request"/>
-</definitions>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:ns2="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://smubank.smu.edu.sg/schemas/Account_DCD" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pfx="http://smubank.smu.edu.sg/Account_DCD">
+    <wsdl:import namespace="http://smubank.smu.edu.sg/Account_DCD" location="/Account_DCD.wsdl"/>
+    <pd:name>Account_DCD_Read.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType wsMsgRef="pfx:Account_DCD_Read-Input"/>
+    <pd:startX>150</pd:startX>
+    <pd:startY>64</pd:startY>
+    <pd:returnBindings>
+        <pfx:Account_DCD_Read-Output>
+            <Account_DCD_Read-Response>
+                <ns:accountID>
+                    <xsl:value-of select="1234"/>
+                </ns:accountID>
+                <ns:customerID>
+                    <xsl:value-of select="1234"/>
+                </ns:customerID>
+                <ns:interestRate>
+                    <xsl:value-of select="1.1"/>
+                </ns:interestRate>
+                <ns:primaryCurr>
+                    <xsl:value-of select="&quot;SGD&quot;"/>
+                </ns:primaryCurr>
+                <ns:secondaryCurr>
+                    <xsl:value-of select="&quot;GBP&quot;"/>
+                </ns:secondaryCurr>
+                <ns:startDate>
+                    <xsl:value-of select="&quot;1995-05-31&quot;"/>
+                </ns:startDate>
+                <ns:maturityDate>
+                    <xsl:value-of select="&quot;1996-05-31&quot;"/>
+                </ns:maturityDate>
+                <ns:termPeriod>
+                    <xsl:value-of select="1234"/>
+                </ns:termPeriod>
+                <ns:penaltyRate>
+                    <xsl:value-of select="1.1"/>
+                </ns:penaltyRate>
+                <ns:depositAmount>
+                    <xsl:value-of select="1.1"/>
+                </ns:depositAmount>
+                <ns:strikeRate>
+                    <xsl:value-of select="1.1"/>
+                </ns:strikeRate>
+            </Account_DCD_Read-Response>
+            <ServiceRespHeader>
+                <ns2:GlobalErrorID>
+                    <xsl:value-of select="&quot;qqq&quot;"/>
+                </ns2:GlobalErrorID>
+                <ns2:ErrorText>
+                    <xsl:value-of select="&quot;qqq&quot;"/>
+                </ns2:ErrorText>
+                <ns2:ErrorDetails>
+                    <xsl:value-of select="&quot;qqq&quot;"/>
+                </ns2:ErrorDetails>
+            </ServiceRespHeader>
+        </pfx:Account_DCD_Read-Output>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType wsMsgRef="pfx:Account_DCD_Read-Output"/>
+    <pd:endX>450</pd:endX>
+    <pd:endY>66</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1539333606536</pd:targetNamespace>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>
