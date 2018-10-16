@@ -1,24 +1,16 @@
-@@ -1,21 +1,122 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pfx="http://smubank.smu.edu.sg/Account_DCD">
 <pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://smubank.smu.edu.sg/logging" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx2="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx="http://smubank.smu.edu.sg/Account_DCD">
     <wsdl:import namespace="http://smubank.smu.edu.sg/Account_DCD" location="/Account_DCD.wsdl"/>
     <pd:name>Account_DCD_Update.process</pd:name>
     <pd:startName>Start</pd:startName>
     <pd:startType wsMsgRef="pfx:Account_DCD_Update-Input"/>
-    <pd:startX>150</pd:startX>
-    <pd:startY>64</pd:startY>
     <pd:startX>97</pd:startX>
     <pd:startY>155</pd:startY>
     <pd:returnBindings/>
     <pd:endName>End</pd:endName>
-    <pd:endType/>
-    <pd:endX>450</pd:endX>
-    <pd:endY>64</pd:endY>
     <pd:endX>656</pd:endX>
     <pd:endY>154</pd:endY>
     <pd:errorSchemas/>
-    <pd:processVariables/>
     <pd:processVariables>
         <Status>
             <xsd:element name="root">
@@ -128,3 +120,6 @@
         <pd:to>End</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>
