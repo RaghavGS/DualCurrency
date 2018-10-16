@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:ns2="http://smubank.smu.edu.sg/schemas/Account_DCD" xmlns:ns4="http://smubank.smu.edu.sg/schemas/serviceRequestMessage/" xmlns:ns="http://smubank.smu.edu.sg/schemas/DualCurrency" xmlns:ns3="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" xmlns:tns="http://smubank.smu.edu.sg/Account_DCD" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://smubank.smu.edu.sg/Account_DCD">
+<definitions xmlns:ns2="http://smubank.smu.edu.sg/schemas/Account_DCD" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:ns="http://smubank.smu.edu.sg/schemas/DualCurrency" xmlns:ns4="http://smubank.smu.edu.sg/schemas/serviceRequestMessage/" xmlns:ns3="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" xmlns:tns="http://smubank.smu.edu.sg/Account_DCD" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://smubank.smu.edu.sg/Account_DCD">
     <import namespace="http://smubank.smu.edu.sg/schemas/Account_DCD" location="Schemas/Account_DCD.xsd"/>
     <import namespace="http://smubank.smu.edu.sg/schemas/serviceRequestMessage/" location="Schemas/ServiceReqMessage.xsd"/>
     <import namespace="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" location="Schemas/ServiceRespHeader.xsd"/>
