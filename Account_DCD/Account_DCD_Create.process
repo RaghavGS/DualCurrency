@@ -52,7 +52,7 @@
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
         <pd:x>378</pd:x>
-        <pd:y>54</pd:y>
+        <pd:y>53</pd:y>
         <config>
             <processName>/writeLog.process</processName>
             <spawn>true</spawn>
@@ -86,8 +86,8 @@
     <pd:activity name="Set Process Name">
         <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
         <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-        <pd:x>331</pd:x>
-        <pd:y>243</pd:y>
+        <pd:x>332</pd:x>
+        <pd:y>242</pd:y>
         <config>
             <variableName>Metadata</variableName>
         </config>
