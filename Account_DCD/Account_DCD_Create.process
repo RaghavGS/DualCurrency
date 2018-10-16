@@ -51,7 +51,11 @@
     <pd:activity name="LoggingPt4">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
+<<<<<<< HEAD
         <pd:x>228</pd:x>
+=======
+        <pd:x>378</pd:x>
+>>>>>>> 1d64be68d5a5a5b563c0a34fee6d5279c7a5ebda
         <pd:y>53</pd:y>
         <config>
             <processName>/writeLog.process</processName>
@@ -86,8 +90,13 @@
     <pd:activity name="Set Process Name">
         <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
         <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+<<<<<<< HEAD
         <pd:x>177</pd:x>
         <pd:y>188</pd:y>
+=======
+        <pd:x>332</pd:x>
+        <pd:y>242</pd:y>
+>>>>>>> 1d64be68d5a5a5b563c0a34fee6d5279c7a5ebda
         <config>
             <variableName>Metadata</variableName>
         </config>
