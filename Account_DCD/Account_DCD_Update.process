@@ -1,122 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://smubank.smu.edu.sg/logging" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx2="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx="http://smubank.smu.edu.sg/Account_DCD">
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pfx="http://smubank.smu.edu.sg/Account_DCD">
     <wsdl:import namespace="http://smubank.smu.edu.sg/Account_DCD" location="/Account_DCD.wsdl"/>
     <pd:name>Account_DCD_Update.process</pd:name>
     <pd:startName>Start</pd:startName>
     <pd:startType wsMsgRef="pfx:Account_DCD_Update-Input"/>
-    <pd:startX>97</pd:startX>
-    <pd:startY>155</pd:startY>
+    <pd:startX>150</pd:startX>
+    <pd:startY>64</pd:startY>
     <pd:returnBindings/>
     <pd:endName>End</pd:endName>
-    <pd:endX>656</pd:endX>
-    <pd:endY>154</pd:endY>
+    <pd:endType/>
+    <pd:endX>450</pd:endX>
+    <pd:endY>64</pd:endY>
     <pd:errorSchemas/>
-    <pd:processVariables>
-        <Status>
-            <xsd:element name="root">
-                <xsd:complexType>
-                    <xsd:sequence>
-                        <xsd:element name="ErrorDetail" type="xsd:string"/>
-                        <xsd:element name="ErrorText" type="xsd:string"/>
-                        <xsd:element name="GlobalErrorID" type="xsd:string"/>
-                    </xsd:sequence>
-                </xsd:complexType>
-            </xsd:element>
-        </Status>
-        <Metadata>
-            <xsd:element name="ProcessName" type="xsd:string"/>
-        </Metadata>
-    </pd:processVariables>
+    <pd:processVariables/>
     <pd:targetNamespace>http://xmlns.example.com/1539334522313</pd:targetNamespace>
-    <pd:activity name="Set Process Name">
-        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
-        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-        <pd:x>216</pd:x>
-        <pd:y>157</pd:y>
-        <config>
-            <variableName>Metadata</variableName>
-        </config>
-        <pd:inputBindings>
-            <ProcessName>
-                <xsl:value-of select="$Start/pfx:Account_DCD_Update-Input/ServiceReqHeader/OperationName"/>
-            </ProcessName>
-        </pd:inputBindings>
-    </pd:activity>
-    <pd:activity name="LoggingPt4">
-        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
-        <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>299</pd:x>
-        <pd:y>35</pd:y>
-        <config>
-            <processName>/writeLog.process</processName>
-            <spawn>true</spawn>
-        </config>
-        <pd:inputBindings>
-            <ns:InputMessage>
-                <ConsumerID>
-                    <xsl:value-of select="$Start/pfx:Account_DCD_Update-Input/ServiceReqHeader/ConsumerID"/>
-                </ConsumerID>
-                <TransactionID>
-                    <xsl:value-of select="$Start/pfx:Account_DCD_Update-Input/ServiceReqHeader/TransactionID"/>
-                </TransactionID>
-                <RequestUUID>
-                    <xsl:value-of select="$Start/pfx:Account_DCD_Update-Input/ServiceReqHeader/RequestUUID"/>
-                </RequestUUID>
-                <OperationName>
-                    <xsl:value-of select="$Start/pfx:Account_DCD_Update-Input/ServiceReqHeader/OperationName"/>
-                </OperationName>
-                <ProcessName>
-                    <xsl:value-of select="$Metadata/ProcessName"/>
-                </ProcessName>
-                <ErrorMsg>
-                    <xsl:value-of select="$Status/root/ErrorDetail"/>
-                </ErrorMsg>
-                <LoggingPointNo>
-                    <xsl:value-of select="4"/>
-                </LoggingPointNo>
-            </ns:InputMessage>
-        </pd:inputBindings>
-    </pd:activity>
-    <pd:activity name="Null">
-        <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
-        <pd:resourceType>ae.activities.null</pd:resourceType>
-        <pd:x>406</pd:x>
-        <pd:y>156</pd:y>
-        <config/>
-        <pd:inputBindings/>
-    </pd:activity>
     <pd:transition>
         <pd:from>Start</pd:from>
-        <pd:to>Set Process Name</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>Set Process Name</pd:from>
-        <pd:to>LoggingPt4</pd:to>
-        <pd:xpathDescription>log on</pd:xpathDescription>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>xpath</pd:conditionType>
-        <pd:xpath>$_globalVariables/pfx2:GlobalVariables/Logging/LogAll = "true" or $_globalVariables/pfx2:GlobalVariables/Logging/LogPt4 = "true"</pd:xpath>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>Set Process Name</pd:from>
-        <pd:to>Null</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>otherwise</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>LoggingPt4</pd:from>
-        <pd:to>Null</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>Null</pd:from>
         <pd:to>End</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>

@@ -55,8 +55,12 @@
         <pd:x>228</pd:x>
 =======
         <pd:x>378</pd:x>
+<<<<<<< HEAD
 >>>>>>> 1d64be68d5a5a5b563c0a34fee6d5279c7a5ebda
         <pd:y>53</pd:y>
+=======
+        <pd:y>54</pd:y>
+>>>>>>> parent of 1d64be6... Set up tibco process definition for Account_DCD_Update
         <config>
             <processName>/writeLog.process</processName>
             <spawn>true</spawn>
@@ -91,12 +95,17 @@
         <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
         <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <pd:x>177</pd:x>
         <pd:y>188</pd:y>
 =======
         <pd:x>332</pd:x>
         <pd:y>242</pd:y>
 >>>>>>> 1d64be68d5a5a5b563c0a34fee6d5279c7a5ebda
+=======
+        <pd:x>331</pd:x>
+        <pd:y>243</pd:y>
+>>>>>>> parent of 1d64be6... Set up tibco process definition for Account_DCD_Update
         <config>
             <variableName>Metadata</variableName>
         </config>
