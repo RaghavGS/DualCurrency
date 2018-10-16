@@ -1,11 +1,12 @@
+@@ -0,0 +1,145 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns1="http://www.tibco.com/pe/EngineTypes" xmlns:ns="http://smubank.smu.edu.sg/schemas/Account_DCD" xmlns:ns3="http://smubank.smu.edu.sg/logging" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx3="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx2="http://smubank.smu.edu.sg/Account_DCD" xmlns:pfx="http://smubank.smu.edu.sg/DualCurrency">
+<pd:ProcessDefinition xmlns:ns2="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://www.tibco.com/pe/EngineTypes" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://smubank.smu.edu.sg/schemas/Account_DCD" xmlns:ns3="http://smubank.smu.edu.sg/logging" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx3="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx2="http://smubank.smu.edu.sg/Account_DCD" xmlns:pfx="http://smubank.smu.edu.sg/DualCurrency">
     <wsdl:import namespace="http://smubank.smu.edu.sg/Account_DCD" location="/Account_DCD.wsdl"/>
     <pd:name>Account_DCD_Create.process</pd:name>
     <pd:startName>Start</pd:startName>
     <pd:startType wsMsgRef="pfx2:Account_DCD_Create-Input"/>
-    <pd:startX>51</pd:startX>
-    <pd:startY>187</pd:startY>
+    <pd:startX>161</pd:startX>
+    <pd:startY>235</pd:startY>
     <pd:returnBindings>
         <pfx2:Account_DCD_Create_Output>
             <Account_DCD_Create-Response>
@@ -28,8 +29,8 @@
     </pd:returnBindings>
     <pd:endName>End</pd:endName>
     <pd:endType wsMsgRef="pfx2:Account_DCD_Create_Output"/>
-    <pd:endX>776</pd:endX>
-    <pd:endY>185</pd:endY>
+    <pd:endX>766</pd:endX>
+    <pd:endY>241</pd:endY>
     <pd:errorSchemas/>
     <pd:processVariables>
         <Status>
@@ -51,16 +52,8 @@
     <pd:activity name="LoggingPt4">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-<<<<<<< HEAD
-        <pd:x>228</pd:x>
-=======
         <pd:x>378</pd:x>
-<<<<<<< HEAD
->>>>>>> 1d64be68d5a5a5b563c0a34fee6d5279c7a5ebda
-        <pd:y>53</pd:y>
-=======
         <pd:y>54</pd:y>
->>>>>>> parent of 1d64be6... Set up tibco process definition for Account_DCD_Update
         <config>
             <processName>/writeLog.process</processName>
             <spawn>true</spawn>
@@ -94,18 +87,8 @@
     <pd:activity name="Set Process Name">
         <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
         <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-<<<<<<< HEAD
-<<<<<<< HEAD
-        <pd:x>177</pd:x>
-        <pd:y>188</pd:y>
-=======
-        <pd:x>332</pd:x>
-        <pd:y>242</pd:y>
->>>>>>> 1d64be68d5a5a5b563c0a34fee6d5279c7a5ebda
-=======
         <pd:x>331</pd:x>
         <pd:y>243</pd:y>
->>>>>>> parent of 1d64be6... Set up tibco process definition for Account_DCD_Update
         <config>
             <variableName>Metadata</variableName>
         </config>
@@ -118,8 +101,8 @@
     <pd:activity name="Null">
         <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
         <pd:resourceType>ae.activities.null</pd:resourceType>
-        <pd:x>309</pd:x>
-        <pd:y>184</pd:y>
+        <pd:x>500</pd:x>
+        <pd:y>242</pd:y>
         <config/>
         <pd:inputBindings/>
     </pd:activity>
