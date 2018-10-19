@@ -8,8 +8,8 @@
     <pd:startY>155</pd:startY>
     <pd:returnBindings/>
     <pd:endName>End</pd:endName>
-    <pd:endX>656</pd:endX>
-    <pd:endY>154</pd:endY>
+    <pd:endX>1014</pd:endX>
+    <pd:endY>170</pd:endY>
     <pd:errorSchemas/>
     <pd:processVariables>
         <Status>
@@ -45,8 +45,8 @@
     <pd:activity name="LoggingPt4">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>299</pd:x>
-        <pd:y>35</pd:y>
+        <pd:x>278</pd:x>
+        <pd:y>38</pd:y>
         <config>
             <processName>/writeLog.process</processName>
             <spawn>true</spawn>
@@ -77,13 +77,166 @@
             </ns:InputMessage>
         </pd:inputBindings>
     </pd:activity>
-    <pd:activity name="Null">
-        <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
-        <pd:resourceType>ae.activities.null</pd:resourceType>
-        <pd:x>406</pd:x>
-        <pd:y>156</pd:y>
-        <config/>
-        <pd:inputBindings/>
+    <pd:activity name="Check if Account Exists">
+        <pd:type>com.tibco.plugin.jdbc.JDBCQueryActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCQueryActivity</pd:resourceType>
+        <pd:x>342</pd:x>
+        <pd:y>161</pd:y>
+        <config>
+            <timeout>10</timeout>
+            <commit>false</commit>
+            <maxRows>100</maxRows>
+            <emptyStrAsNil>false</emptyStrAsNil>
+        </config>
+        <pd:inputBindings>
+            <jdbcQueryActivityInput/>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="JDBC Update">
+        <pd:type>com.tibco.plugin.jdbc.JDBCUpdateActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCUpdateActivity</pd:resourceType>
+        <pd:x>419</pd:x>
+        <pd:y>312</pd:y>
+        <config>
+            <timeout>10</timeout>
+            <commit>false</commit>
+            <emptyStrAsNil>false</emptyStrAsNil>
+        </config>
+        <pd:inputBindings>
+            <jdbcUpdateActivityInput/>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="JDBC-Update-1">
+        <pd:type>com.tibco.plugin.jdbc.JDBCUpdateActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCUpdateActivity</pd:resourceType>
+        <pd:x>422</pd:x>
+        <pd:y>446</pd:y>
+        <config>
+            <timeout>10</timeout>
+            <commit>false</commit>
+            <emptyStrAsNil>false</emptyStrAsNil>
+        </config>
+        <pd:inputBindings>
+            <jdbcUpdateActivityInput/>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="JDBC-Update-2">
+        <pd:type>com.tibco.plugin.jdbc.JDBCUpdateActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCUpdateActivity</pd:resourceType>
+        <pd:x>628</pd:x>
+        <pd:y>452</pd:y>
+        <config>
+            <timeout>10</timeout>
+            <commit>false</commit>
+            <emptyStrAsNil>false</emptyStrAsNil>
+        </config>
+        <pd:inputBindings>
+            <jdbcUpdateActivityInput/>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Success">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>631</pd:x>
+        <pd:y>309</pd:y>
+        <config>
+            <variableName>Status</variableName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <ErrorDetail>
+                    <xsl:value-of select="'010000'"/>
+                </ErrorDetail>
+                <ErrorText>
+                    <xsl:value-of select="''"/>
+                </ErrorText>
+                <GlobalErrorID>
+                    <xsl:value-of select="''"/>
+                </GlobalErrorID>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Account Not Found">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>477</pd:x>
+        <pd:y>77</pd:y>
+        <config>
+            <variableName>Status</variableName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <ErrorDetail>
+                    <xsl:value-of select="'010010'"/>
+                </ErrorDetail>
+                <ErrorText>
+                    <xsl:value-of select="''"/>
+                </ErrorText>
+                <GlobalErrorID>
+                    <xsl:value-of select="'Account record not found'"/>
+                </GlobalErrorID>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="LoggingPt5">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>916</pd:x>
+        <pd:y>40</pd:y>
+        <config>
+            <processName>/writeLog.process</processName>
+            <spawn>true</spawn>
+        </config>
+        <pd:inputBindings>
+            <ns:InputMessage>
+                <ConsumerID>
+                    <xsl:value-of select="$Start/pfx:Account_DCD_Update-Input/ServiceReqHeader/ConsumerID"/>
+                </ConsumerID>
+                <TransactionID>
+                    <xsl:value-of select="$Start/pfx:Account_DCD_Update-Input/ServiceReqHeader/TransactionID"/>
+                </TransactionID>
+                <RequestUUID>
+                    <xsl:value-of select="$Start/pfx:Account_DCD_Update-Input/ServiceReqHeader/RequestUUID"/>
+                </RequestUUID>
+                <OperationName>
+                    <xsl:value-of select="$Start/pfx:Account_DCD_Update-Input/ServiceReqHeader/OperationName"/>
+                </OperationName>
+                <ProcessName>
+                    <xsl:value-of select="$Metadata/ProcessName"/>
+                </ProcessName>
+                <LoggingPointNo>
+                    <xsl:value-of select="5"/>
+                </LoggingPointNo>
+                <ErrorMsg>
+                    <xsl:value-of select="$Status/root/ErrorDetail"/>
+                </ErrorMsg>
+            </ns:InputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Get Error Text">
+        <pd:type>com.tibco.plugin.jdbc.JDBCQueryActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCQueryActivity</pd:resourceType>
+        <pd:x>783</pd:x>
+        <pd:y>169</pd:y>
+        <config>
+            <timeout>10</timeout>
+            <commit>false</commit>
+            <maxRows>100</maxRows>
+            <emptyStrAsNil>false</emptyStrAsNil>
+            <jdbcSharedConfig>/Connections/MDM.sharedjdbc</jdbcSharedConfig>
+            <statement>SELECT `errortext` 
+FROM `global_errorreference` 
+WHERE `globalerrorid` = ?;</statement>
+            <Prepared_Param_DataType>
+                <parameter>
+                    <parameterName>errorcode</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+            </Prepared_Param_DataType>
+        </config>
+        <pd:inputBindings>
+            <jdbcQueryActivityInput/>
+        </pd:inputBindings>
     </pd:activity>
     <pd:transition>
         <pd:from>Start</pd:from>
@@ -103,21 +256,101 @@
     </pd:transition>
     <pd:transition>
         <pd:from>Set Process Name</pd:from>
-        <pd:to>Null</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>otherwise</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>LoggingPt4</pd:from>
-        <pd:to>Null</pd:to>
+        <pd:to>Check if Account Exists</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>Null</pd:from>
+        <pd:from>Check if Account Exists</pd:from>
+        <pd:to>JDBC Update</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>JDBC Update</pd:from>
+        <pd:to>JDBC-Update-1</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>JDBC Update</pd:from>
+        <pd:to>Success</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>JDBC-Update-1</pd:from>
+        <pd:to>Success</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>JDBC-Update-1</pd:from>
+        <pd:to>JDBC-Update-2</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>JDBC-Update-2</pd:from>
+        <pd:to>Success</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Success</pd:from>
+        <pd:to>Get Error Text</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Account Not Found</pd:from>
+        <pd:to>Get Error Text</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Check if Account Exists</pd:from>
+        <pd:to>Account Not Found</pd:to>
+        <pd:xpathDescription>Not found</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get Error Text</pd:from>
+        <pd:to>LoggingPt5</pd:to>
+        <pd:xpathDescription>Log is on</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$_globalVariables/pfx2:GlobalVariables/Logging/LogAll = "true" or $_globalVariables/pfx2:GlobalVariables/Logging/LogPt5 = "true"</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get Error Text</pd:from>
         <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>LoggingPt5</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>LoggingPt4</pd:from>
+        <pd:to>Check if Account Exists</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
