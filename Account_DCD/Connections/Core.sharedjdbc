@@ -8,7 +8,7 @@
         <loginTimeout>10</loginTimeout>
         <connectionType>JDBC</connectionType>
         <UseSharedJndiConfig>false</UseSharedJndiConfig>
-        <location>jdbc:mysql://localhost:3306/smu_core_services_test</location>
+        <location>jdbc:mysql://localhost:3306/smu_core_services</location>
         <user>%%SMUBank/JDBC-Username%%</user>
         <password>%%SMUBank/JDBC-Password%%</password>
     </config>

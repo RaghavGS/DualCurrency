@@ -1,69 +1,91 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
+<?xml version="1.0" encoding="utf-8" ?>
+<!--Created with Liquid Studio 2017 - Developer Bundle Edition (Education) 15.1.16.7872 (https://www.liquid-technologies.com)-->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	 xmlns="http://smubank.smu.edu.sg/schemas/Account_DCD"
-	 targetNamespace="http://smubank.smu.edu.sg/schemas/Account_DCD"
-	 elementFormDefault="qualified"
-	 attributeFormDefault="unqualified">
-
+    xmlns="http://smubank.smu.edu.sg/schemas/Account_DCD"
+    targetNamespace="http://smubank.smu.edu.sg/schemas/Account_DCD"
+    attributeFormDefault="unqualified"
+    elementFormDefault="qualified">
+     
     <xs:complexType name="Account_DCD_Read-Request">
         <xs:sequence>
-            <xs:element ref="accountID" />
-            <xs:element ref="customerID" />
+            <xs:element ref="accountId" />
+            <xs:element ref="customerId" />
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="Account_DCD_Read-Response">
         <xs:sequence>
-            <xs:element ref="accountID" />
-            <xs:element ref="customerID" />
+            <xs:element ref="accountId" />
+            <xs:element ref="customerId" />
+            <xs:element ref="productId" />
             <xs:element ref="interestRate" />
-            <xs:element ref="primaryCurr" />
-            <xs:element ref="secondaryCurr" />
+            <xs:element ref="baseCurrency" />
+            <xs:element ref="quoteCurrency" />
             <xs:element ref="startDate" />
             <xs:element ref="maturityDate" />
             <xs:element ref="termPeriod" />
             <xs:element ref="penaltyRate" />
             <xs:element ref="depositAmount" />
+            <xs:element ref="interestPayoutAccount" />
+            <xs:element ref="feeDeductionAccount" />
+            <xs:element ref="settlementAccount" />
+            <xs:element ref="status" />
             <xs:element ref="strikeRate" />
+            <xs:element ref="narrative" />
+            <xs:element ref="channel" />
+            <xs:element ref="bankId" />
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="Account_DCD_Create-Request">
         <xs:sequence>
-            <xs:element ref="customerID" />
+            <xs:element ref="accountId" />
+            <xs:element ref="customerId" />
+            <xs:element ref="productId" />
             <xs:element ref="interestRate" />
-            <xs:element ref="primaryCurr" />
-            <xs:element ref="secondaryCurr" />
+            <xs:element ref="baseCurrency" />
+            <xs:element ref="quoteCurrency" />
             <xs:element ref="startDate" />
             <xs:element ref="maturityDate" />
             <xs:element ref="termPeriod" />
             <xs:element ref="penaltyRate" />
             <xs:element ref="depositAmount" />
-            <xs:element ref="termPeriod" />
+            <xs:element ref="interestPayoutAccount" />
+            <xs:element ref="feeDeductionAccount" />
+            <xs:element ref="settlementAccount" />
+            <xs:element ref="status" />
             <xs:element ref="strikeRate" />
+            <xs:element ref="narrative" />
+            <xs:element ref="channel" />
+            <xs:element ref="bankId" />
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="Account_DCD_Create-Response">
         <xs:sequence>
-            <xs:element ref="accountID" />
+            <xs:element ref="accountId" />
+            <xs:element ref="customerId" />
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="Account_DCD_Update-Request">
         <xs:sequence>
-            <xs:element ref="accountID" />
-            <xs:element ref="customerID" />
-            <xs:element name="Status" type="xs:string" />
+            <xs:element ref="accountId" />
+            <xs:element ref="customerId" />
+            <xs:element name="status" type="xs:string" />
         </xs:sequence>
     </xs:complexType>
-    
-    
-    <xs:element name="customerID">
+    <xs:element name="customerId">
         <xs:simpleType>
             <xs:restriction base="xs:int">
                 <xs:totalDigits value="10" />
             </xs:restriction>
         </xs:simpleType>
     </xs:element>
-    <xs:element name="accountID">
+    <xs:element name="accountId">
+        <xs:simpleType>
+            <xs:restriction base="xs:int">
+                <xs:totalDigits value="10" />
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+    <xs:element name="productId">
         <xs:simpleType>
             <xs:restriction base="xs:int">
                 <xs:totalDigits value="10" />
@@ -71,8 +93,8 @@
         </xs:simpleType>
     </xs:element>
     <xs:element name="interestRate" type="xs:decimal" />
-    <xs:element name="primaryCurr" type="xs:string" />
-    <xs:element name="secondaryCurr" type="xs:string" />
+    <xs:element name="baseCurrency" type="xs:string" />
+    <xs:element name="quoteCurrency" type="xs:string" />
     <xs:element name="startDate" type="xs:date" />
     <xs:element name="maturityDate" type="xs:date" />
     <xs:element name="depositAmount" type="xs:decimal" />
@@ -85,4 +107,35 @@
     </xs:element>
     <xs:element name="strikeRate" type="xs:decimal" />
     <xs:element name="penaltyRate" type="xs:decimal" />
+    <xs:element name="status" type="xs:string" />
+    <xs:element name="interestPayoutAccount">
+        <xs:simpleType>
+            <xs:restriction base="xs:int">
+                <xs:totalDigits value="10" />
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+    <xs:element name="settlementAccount">
+        <xs:simpleType>
+            <xs:restriction base="xs:int">
+                <xs:totalDigits value="10" />
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+    <xs:element name="feeDeductionAccount">
+        <xs:simpleType>
+            <xs:restriction base="xs:int">
+                <xs:totalDigits value="10" />
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+    <xs:element name="narrative" type="xs:string" />
+    <xs:element name="channel" type="xs:string" />
+    <xs:element name="bankId">
+        <xs:simpleType>
+            <xs:restriction base="xs:int">
+                <xs:totalDigits value="10" />
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
 </xs:schema>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:ns2="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://www.tibco.com/pe/EngineTypes" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://smubank.smu.edu.sg/schemas/Account_DCD" xmlns:ns3="http://smubank.smu.edu.sg/logging" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx3="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx2="http://smubank.smu.edu.sg/Account_DCD" xmlns:pfx="http://smubank.smu.edu.sg/DualCurrency">
+<pd:ProcessDefinition xmlns:ns2="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://www.tibco.com/pe/EngineTypes" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://smubank.smu.edu.sg/schemas/Account_DCD" xmlns:ns3="http://smubank.smu.edu.sg/logging" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx3="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx2="http://smubank.smu.edu.sg/Account_DCD" xmlns:pfx="http://smubank.smu.edu.sg/DualCurrency" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <wsdl:import namespace="http://smubank.smu.edu.sg/Account_DCD" location="/Account_DCD.wsdl"/>
     <pd:name>Account_DCD_Create.process</pd:name>
     <pd:startName>Start</pd:startName>
@@ -10,26 +10,32 @@
         <pfx2:Account_DCD_Create_Output>
             <Account_DCD_Create-Response>
                 <ns:accountID>
-                    <xsl:value-of select="1234"/>
+                    <xsl:value-of select="$Get-DCD-Account-ID/resultSet/Record[1]/last_insert_id"/>
                 </ns:accountID>
+                <ns:accountId>
+                    <xsl:value-of select="$Get-DCD-Account-ID/resultSet/Record[1]/last_insert_id"/>
+                </ns:accountId>
+                <ns:customerId>
+                    <xsl:value-of select="$Check-if-CustomerID-Exists/resultSet/Record[1]/customerID"/>
+                </ns:customerId>
             </Account_DCD_Create-Response>
             <ServiceRespHeader>
                 <ns2:GlobalErrorID>
-                    <xsl:value-of select="&quot;qqq&quot;"/>
+                    <xsl:value-of select="$Status/root/GlobalErrorID"/>
                 </ns2:GlobalErrorID>
                 <ns2:ErrorText>
-                    <xsl:value-of select="&quot;qqq&quot;"/>
+                    <xsl:value-of select="$Status/root/ErrorText"/>
                 </ns2:ErrorText>
                 <ns2:ErrorDetails>
-                    <xsl:value-of select="&quot;qqq&quot;"/>
+                    <xsl:value-of select="$Status/root/ErrorDetail"/>
                 </ns2:ErrorDetails>
             </ServiceRespHeader>
         </pfx2:Account_DCD_Create_Output>
     </pd:returnBindings>
     <pd:endName>End</pd:endName>
     <pd:endType wsMsgRef="pfx2:Account_DCD_Create_Output"/>
-    <pd:endX>901</pd:endX>
-    <pd:endY>197</pd:endY>
+    <pd:endX>898</pd:endX>
+    <pd:endY>194</pd:endY>
     <pd:errorSchemas/>
     <pd:processVariables>
         <Status>
@@ -100,7 +106,7 @@
     <pd:group name="Group">
         <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
         <pd:resourceType>ae.process.group</pd:resourceType>
-        <pd:x>229</pd:x>
+        <pd:x>230</pd:x>
         <pd:y>306</pd:y>
         <pd:width>879</pd:width>
         <pd:height>298</pd:height>
@@ -117,6 +123,13 @@
         <pd:transition>
             <pd:from>start</pd:from>
             <pd:to>Start Transaction</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Success</pd:from>
+            <pd:to>end</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>always</pd:conditionType>
@@ -189,7 +202,11 @@
                 <jdbcSharedConfig>/Connections/Core.sharedjdbc</jdbcSharedConfig>
             </config>
             <pd:inputBindings>
-                <jdbcGeneralActivityInput/>
+                <jdbcGeneralActivityInput>
+                    <statement>
+                        <xsl:value-of select="'START TRANSACTION;'"/>
+                    </statement>
+                </jdbcGeneralActivityInput>
             </pd:inputBindings>
         </pd:activity>
         <pd:activity name="Set READ COMMITTED">
@@ -204,7 +221,11 @@
                 <jdbcSharedConfig>/Connections/Core.sharedjdbc</jdbcSharedConfig>
             </config>
             <pd:inputBindings>
-                <jdbcGeneralActivityInput/>
+                <jdbcGeneralActivityInput>
+                    <statement>
+                        <xsl:value-of select="&quot;SET SESSION tx_isolation='READ-COMMITTED';&quot;"/>
+                    </statement>
+                </jdbcGeneralActivityInput>
             </pd:inputBindings>
         </pd:activity>
         <pd:activity name="Check if CustomerID Exists">
@@ -239,7 +260,7 @@
             <pd:inputBindings>
                 <jdbcQueryActivityInput>
                     <customerID>
-                        <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/Account_DCD_Create-Request/ns:customerID"/>
+                        <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/Account_DCD_Create-Request/ns:customerId"/>
                     </customerID>
                 </jdbcQueryActivityInput>
             </pd:inputBindings>
@@ -255,9 +276,48 @@
                 <maxRows>100</maxRows>
                 <emptyStrAsNil>false</emptyStrAsNil>
                 <jdbcSharedConfig>/Connections/Core.sharedjdbc</jdbcSharedConfig>
+                <statement>select interest_rate, penalty_rate, term from product where product_id = ? and bank_id = ?;</statement>
+                <oraObjects/>
+                <oraTables/>
+                <QueryOutputCachedSchemaColumns>interest_rate</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>3</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>DECIMAL</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>
+                <QueryOutputCachedSchemaColumns>penalty_rate</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>3</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>DECIMAL</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>
+                <QueryOutputCachedSchemaColumns>term</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>4</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>INT</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>
+                <Prepared_Param_DataType>
+                    <parameter>
+                        <parameterName>ProductID</parameterName>
+                        <dataType>VARCHAR</dataType>
+                    </parameter>
+                    <parameter>
+                        <parameterName>BankID</parameterName>
+                        <dataType>VARCHAR</dataType>
+                    </parameter>
+                </Prepared_Param_DataType>
             </config>
             <pd:inputBindings>
-                <jdbcQueryActivityInput/>
+                <jdbcQueryActivityInput>
+                    <ProductID>
+                        <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/Account_DCD_Create-Request/ns:productId"/>
+                    </ProductID>
+                    <BankID>
+                        <xsl:choose>
+                            <xsl:when test="exists($Check-if-CustomerID-Exists/resultSet/Record[1]/bank_id)">
+                                <xsl:value-of select="$Check-if-CustomerID-Exists/resultSet/Record[1]/bank_id"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </BankID>
+                </jdbcQueryActivityInput>
             </pd:inputBindings>
         </pd:activity>
         <pd:activity name="Create Account">
@@ -270,22 +330,167 @@
                 <commit>false</commit>
                 <emptyStrAsNil>false</emptyStrAsNil>
                 <jdbcSharedConfig>/Connections/Core.sharedjdbc</jdbcSharedConfig>
+                <statement>insert into account(accountID,customerID,productID,interestRate,currency,title,accountOpenDate,maturityDate,depositTerm,balance,penaltyRate,currentStatus,interestPayoutAccount,settlementAccount,feeDeductionAccount,pledgeOrStopPaymentAccount,narrative,channel,bank_id)
+values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</statement>
+                <Prepared_Param_DataType>
+                    <parameter>
+                        <parameterName>accountID</parameterName>
+                        <dataType>INTEGER</dataType>
+                    </parameter>
+                    <parameter>
+                        <parameterName>customerID</parameterName>
+                        <dataType>INTEGER</dataType>
+                    </parameter>
+                    <parameter>
+                        <parameterName>productID</parameterName>
+                        <dataType>VARCHAR</dataType>
+                    </parameter>
+                    <parameter>
+                        <parameterName>interestRate</parameterName>
+                        <dataType>DECIMAL</dataType>
+                    </parameter>
+                    <parameter>
+                        <parameterName>currency</parameterName>
+                        <dataType>VARCHAR</dataType>
+                    </parameter>
+                    <parameter>
+                        <parameterName>title</parameterName>
+                        <dataType>VARCHAR</dataType>
+                    </parameter>
+                    <parameter>
+                        <parameterName>accountOpenDate</parameterName>
+                        <dataType>VARCHAR</dataType>
+                    </parameter>
+                    <parameter>
+                        <parameterName>maturityDate</parameterName>
+                        <dataType>VARCHAR</dataType>
+                    </parameter>
+                    <parameter>
+                        <parameterName>depositTerm</parameterName>
+                        <dataType>INTEGER</dataType>
+                    </parameter>
+                    <parameter>
+                        <parameterName>balance</parameterName>
+                        <dataType>DECIMAL</dataType>
+                    </parameter>
+                    <parameter>
+                        <parameterName>penaltyRate</parameterName>
+                        <dataType>DECIMAL</dataType>
+                    </parameter>
+                    <parameter>
+                        <parameterName>currentStatus</parameterName>
+                        <dataType>VARCHAR</dataType>
+                    </parameter>
+                    <parameter>
+                        <parameterName>interestPayoutAccount</parameterName>
+                        <dataType>INTEGER</dataType>
+                    </parameter>
+                    <parameter>
+                        <parameterName>settlementAccount</parameterName>
+                        <dataType>INTEGER</dataType>
+                    </parameter>
+                    <parameter>
+                        <parameterName>feeDeductionAccount</parameterName>
+                        <dataType>INTEGER</dataType>
+                    </parameter>
+                    <parameter>
+                        <parameterName>pledgeOrStopPaymentAmount</parameterName>
+                        <dataType>DECIMAL</dataType>
+                    </parameter>
+                    <parameter>
+                        <parameterName>narrative</parameterName>
+                        <dataType>VARCHAR</dataType>
+                    </parameter>
+                    <parameter>
+                        <parameterName>channel</parameterName>
+                        <dataType>VARCHAR</dataType>
+                    </parameter>
+                    <parameter>
+                        <parameterName>bankID</parameterName>
+                        <dataType>VARCHAR</dataType>
+                    </parameter>
+                </Prepared_Param_DataType>
             </config>
             <pd:inputBindings>
-                <jdbcUpdateActivityInput/>
+                <jdbcUpdateActivityInput>
+                    <accountID>
+                        <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/Account_DCD_Create-Request/ns:accountId"/>
+                    </accountID>
+                    <customerID>
+                        <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/Account_DCD_Create-Request/ns:customerId"/>
+                    </customerID>
+                    <productID>
+                        <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/Account_DCD_Create-Request/ns:productId"/>
+                    </productID>
+                    <interestRate>
+                        <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/Account_DCD_Create-Request/ns:interestRate"/>
+                    </interestRate>
+                    <currency>
+                        <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/Account_DCD_Create-Request/ns:baseCurrency"/>
+                    </currency>
+                    <title>
+                        <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/Account_DCD_Create-Request/ns:quoteCurrency"/>
+                    </title>
+                    <accountOpenDate>
+                        <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/Account_DCD_Create-Request/ns:startDate"/>
+                    </accountOpenDate>
+                    <maturityDate>
+                        <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/Account_DCD_Create-Request/ns:maturityDate"/>
+                    </maturityDate>
+                    <depositTerm>
+                        <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/Account_DCD_Create-Request/ns:termPeriod"/>
+                    </depositTerm>
+                    <balance>
+                        <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/Account_DCD_Create-Request/ns:depositAmount"/>
+                    </balance>
+                    <penaltyRate>
+                        <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/Account_DCD_Create-Request/ns:penaltyRate"/>
+                    </penaltyRate>
+                    <currentStatus>
+                        <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/Account_DCD_Create-Request/ns:status"/>
+                    </currentStatus>
+                    <interestPayoutAccount>
+                        <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/Account_DCD_Create-Request/ns:interestPayoutAccount"/>
+                    </interestPayoutAccount>
+                    <settlementAccount>
+                        <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/Account_DCD_Create-Request/ns:settlementAccount"/>
+                    </settlementAccount>
+                    <feeDeductionAccount>
+                        <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/Account_DCD_Create-Request/ns:feeDeductionAccount"/>
+                    </feeDeductionAccount>
+                    <pledgeOrStopPaymentAmount>
+                        <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/Account_DCD_Create-Request/ns:strikeRate"/>
+                    </pledgeOrStopPaymentAmount>
+                    <narrative>
+                        <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/Account_DCD_Create-Request/ns:narrative"/>
+                    </narrative>
+                    <channel>
+                        <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/Account_DCD_Create-Request/ns:channel"/>
+                    </channel>
+                    <bankID>
+                        <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/Account_DCD_Create-Request/ns:bankId"/>
+                    </bankID>
+                </jdbcUpdateActivityInput>
             </pd:inputBindings>
         </pd:activity>
         <pd:activity name="Get DCD Account ID">
             <pd:type>com.tibco.plugin.jdbc.JDBCQueryActivity</pd:type>
             <pd:resourceType>ae.activities.JDBCQueryActivity</pd:resourceType>
-            <pd:x>602</pd:x>
-            <pd:y>534</pd:y>
+            <pd:x>604</pd:x>
+            <pd:y>521</pd:y>
             <config>
                 <timeout>10</timeout>
                 <commit>false</commit>
                 <maxRows>100</maxRows>
                 <emptyStrAsNil>false</emptyStrAsNil>
                 <jdbcSharedConfig>/Connections/Core.sharedjdbc</jdbcSharedConfig>
+                <statement>select last_insert_id();</statement>
+                <oraObjects/>
+                <oraTables/>
+                <QueryOutputCachedSchemaColumns>last_insert_id</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>-5</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>BIGINT UNSIGNED</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>
             </config>
             <pd:inputBindings>
                 <jdbcQueryActivityInput/>
@@ -322,11 +527,23 @@
             <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
             <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
             <pd:x>906</pd:x>
-            <pd:y>387</pd:y>
+            <pd:y>388</pd:y>
             <config>
                 <variableName>Status</variableName>
             </config>
-            <pd:inputBindings/>
+            <pd:inputBindings>
+                <root>
+                    <GlobalErrorID>
+                        <xsl:value-of select="$Status/root/GlobalErrorID"/>
+                    </GlobalErrorID>
+                    <ErrorText>
+                        <xsl:value-of select="$Status/root/ErrorText"/>
+                    </ErrorText>
+                    <ErrorDetail>
+                        <xsl:value-of select="$Status/root/ErrorDetail"/>
+                    </ErrorDetail>
+                </root>
+            </pd:inputBindings>
         </pd:activity>
     </pd:group>
     <pd:transition>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:ns2="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://smubank.smu.edu.sg/schemas/Account_DCD" xmlns:ns3="http://smubank.smu.edu.sg/logging" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx2="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx="http://smubank.smu.edu.sg/Account_DCD">
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://smubank.smu.edu.sg/schemas/Account_DCD" xmlns:ns3="http://smubank.smu.edu.sg/logging" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx2="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx="http://smubank.smu.edu.sg/Account_DCD">
     <wsdl:import namespace="http://smubank.smu.edu.sg/Account_DCD" location="/Account_DCD.wsdl"/>
     <pd:name>Account_DCD_Read.process</pd:name>
     <pd:startName>Start</pd:startName>
@@ -9,21 +9,24 @@
     <pd:returnBindings>
         <pfx:Account_DCD_Read-Output>
             <Account_DCD_Read-Response>
-                <ns:accountID>
+                <ns:accountId>
                     <xsl:value-of select="$Get-Account-Details/resultSet/Record[1]/accountID"/>
-                </ns:accountID>
-                <ns:customerID>
-                    <xsl:value-of select="tib:pad-front($Get-Account-Details/resultSet/Record[1]/customerID , '10', '0')"/>
-                </ns:customerID>
+                </ns:accountId>
+                <ns:customerId>
+                    <xsl:value-of select="$Get-Account-Details/resultSet/Record[1]/customerID"/>
+                </ns:customerId>
+                <ns:productId>
+                    <xsl:value-of select="$Get-Account-Details/resultSet/Record[1]/productID"/>
+                </ns:productId>
                 <ns:interestRate>
-                    <xsl:value-of select="$Get-Account-Details/resultSet/Record[1]/DCD_IR"/>
+                    <xsl:value-of select="$Get-Account-Details/resultSet/Record[1]/interestRate"/>
                 </ns:interestRate>
-                <ns:primaryCurr>
-                    <xsl:value-of select="$Get-Account-Details/resultSet/Record[1]/DCD_Pri_Curr"/>
-                </ns:primaryCurr>
-                <ns:secondaryCurr>
-                    <xsl:value-of select="$Get-Account-Details/resultSet/Record[1]/DCD_Sec_Curr"/>
-                </ns:secondaryCurr>
+                <ns:baseCurrency>
+                    <xsl:value-of select="$Get-Account-Details/resultSet/Record[1]/currency"/>
+                </ns:baseCurrency>
+                <ns:quoteCurrency>
+                    <xsl:value-of select="$Get-Account-Details/resultSet/Record[1]/title"/>
+                </ns:quoteCurrency>
                 <ns:startDate>
                     <xsl:value-of select="substring($Get-Account-Details/resultSet/Record[1]/maturityDate, '0', '11')"/>
                 </ns:startDate>
@@ -31,17 +34,38 @@
                     <xsl:value-of select="substring($Get-Account-Details/resultSet/Record[1]/maturityDate, '0', '11')"/>
                 </ns:maturityDate>
                 <ns:termPeriod>
-                    <xsl:value-of select="$Get-Account-Details/resultSet/Record[1]/DCD_TermPeriod"/>
+                    <xsl:value-of select="$Get-Account-Details/resultSet/Record[1]/depositTerm"/>
                 </ns:termPeriod>
                 <ns:penaltyRate>
                     <xsl:value-of select="$Get-Account-Details/resultSet/Record[1]/penaltyRate"/>
                 </ns:penaltyRate>
                 <ns:depositAmount>
-                    <xsl:value-of select="$Get-Account-Details/resultSet/Record[1]/DCD_InitialDepositAmt"/>
+                    <xsl:value-of select="$Get-Account-Details/resultSet/Record[1]/balance"/>
                 </ns:depositAmount>
+                <ns:interestPayoutAccount>
+                    <xsl:value-of select="$Get-Account-Details/resultSet/Record[1]/interestPayoutAccount"/>
+                </ns:interestPayoutAccount>
+                <ns:feeDeductionAccount>
+                    <xsl:value-of select="$Get-Account-Details/resultSet/Record[1]/feeDeductionAccount"/>
+                </ns:feeDeductionAccount>
+                <ns:settlementAccount>
+                    <xsl:value-of select="$Get-Account-Details/resultSet/Record[1]/settlementAccount"/>
+                </ns:settlementAccount>
+                <ns:status>
+                    <xsl:value-of select="$Get-Account-Details/resultSet/Record[1]/currentStatus"/>
+                </ns:status>
                 <ns:strikeRate>
-                    <xsl:value-of select="$Get-Account-Details/resultSet/Record[1]/DCD_StrikeRate"/>
+                    <xsl:value-of select="$Get-Account-Details/resultSet/Record[1]/pledgeOrStopPaymentAmount"/>
                 </ns:strikeRate>
+                <ns:narrative>
+                    <xsl:value-of select="$Get-Account-Details/resultSet/Record[1]/narrative"/>
+                </ns:narrative>
+                <ns:channel>
+                    <xsl:value-of select="$Get-Account-Details/resultSet/Record[1]/channel"/>
+                </ns:channel>
+                <ns:bankId>
+                    <xsl:value-of select="$Get-Account-Details/resultSet/Record[1]/bank_id"/>
+                </ns:bankId>
             </Account_DCD_Read-Response>
             <ServiceRespHeader>
                 <ns2:GlobalErrorID>
@@ -58,8 +82,8 @@
     </pd:returnBindings>
     <pd:endName>End</pd:endName>
     <pd:endType wsMsgRef="pfx:Account_DCD_Read-Output"/>
-    <pd:endX>941</pd:endX>
-    <pd:endY>161</pd:endY>
+    <pd:endX>942</pd:endX>
+    <pd:endY>159</pd:endY>
     <pd:errorSchemas/>
     <pd:processVariables>
         <Status>
@@ -174,38 +198,6 @@
             <QueryOutputCachedSchemaColumns>bank_id</QueryOutputCachedSchemaColumns>
             <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
             <QueryOutputCachedSchemaDataTypesName>VARCHAR</QueryOutputCachedSchemaDataTypesName>
-            <QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>
-            <QueryOutputCachedSchemaColumns>DCD_IR</QueryOutputCachedSchemaColumns>
-            <QueryOutputCachedSchemaDataTypes>3</QueryOutputCachedSchemaDataTypes>
-            <QueryOutputCachedSchemaDataTypesName>DECIMAL</QueryOutputCachedSchemaDataTypesName>
-            <QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>
-            <QueryOutputCachedSchemaColumns>DCD_Pri_Curr</QueryOutputCachedSchemaColumns>
-            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
-            <QueryOutputCachedSchemaDataTypesName>VARCHAR</QueryOutputCachedSchemaDataTypesName>
-            <QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>
-            <QueryOutputCachedSchemaColumns>DCD_Sec_Curr</QueryOutputCachedSchemaColumns>
-            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
-            <QueryOutputCachedSchemaDataTypesName>VARCHAR</QueryOutputCachedSchemaDataTypesName>
-            <QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>
-            <QueryOutputCachedSchemaColumns>DCD_MaturityDate</QueryOutputCachedSchemaColumns>
-            <QueryOutputCachedSchemaDataTypes>93</QueryOutputCachedSchemaDataTypes>
-            <QueryOutputCachedSchemaDataTypesName>DATE</QueryOutputCachedSchemaDataTypesName>
-            <QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>
-            <QueryOutputCachedSchemaColumns>DCD_StartDate</QueryOutputCachedSchemaColumns>
-            <QueryOutputCachedSchemaDataTypes>93</QueryOutputCachedSchemaDataTypes>
-            <QueryOutputCachedSchemaDataTypesName>DATE</QueryOutputCachedSchemaDataTypesName>
-            <QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>
-            <QueryOutputCachedSchemaColumns>DCD_TermPeriod</QueryOutputCachedSchemaColumns>
-            <QueryOutputCachedSchemaDataTypes>4</QueryOutputCachedSchemaDataTypes>
-            <QueryOutputCachedSchemaDataTypesName>INT</QueryOutputCachedSchemaDataTypesName>
-            <QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>
-            <QueryOutputCachedSchemaColumns>DCD_InitialDepositAmt</QueryOutputCachedSchemaColumns>
-            <QueryOutputCachedSchemaDataTypes>3</QueryOutputCachedSchemaDataTypes>
-            <QueryOutputCachedSchemaDataTypesName>DECIMAL</QueryOutputCachedSchemaDataTypesName>
-            <QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>
-            <QueryOutputCachedSchemaColumns>DCD_StrikeRate</QueryOutputCachedSchemaColumns>
-            <QueryOutputCachedSchemaDataTypes>3</QueryOutputCachedSchemaDataTypes>
-            <QueryOutputCachedSchemaDataTypesName>DECIMAL</QueryOutputCachedSchemaDataTypesName>
             <QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>
             <QueryOutputCachedSchemaColumns>homeBranch</QueryOutputCachedSchemaColumns>
             <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
@@ -431,10 +423,10 @@
         <pd:inputBindings>
             <jdbcQueryActivityInput>
                 <accountID>
-                    <xsl:value-of select="$Start/pfx:Account_DCD_Read-Input/Account_DCD_Read-Request/ns:accountID"/>
+                    <xsl:value-of select="$Start/pfx:Account_DCD_Read-Input/Account_DCD_Read-Request/ns:accountId"/>
                 </accountID>
                 <customerID>
-                    <xsl:value-of select="$Start/pfx:Account_DCD_Read-Input/Account_DCD_Read-Request/ns:customerID"/>
+                    <xsl:value-of select="$Start/pfx:Account_DCD_Read-Input/Account_DCD_Read-Request/ns:customerId"/>
                 </customerID>
             </jdbcQueryActivityInput>
         </pd:inputBindings>
