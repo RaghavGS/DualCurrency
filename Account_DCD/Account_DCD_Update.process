@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns1="http://smubank.smu.edu.sg/schemas/Account_DCD" xmlns:ns="http://smubank.smu.edu.sg/logging" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx2="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx="http://smubank.smu.edu.sg/Account_DCD">
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://smubank.smu.edu.sg/schemas/Account_DCD" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://smubank.smu.edu.sg/logging" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx2="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx="http://smubank.smu.edu.sg/Account_DCD">
     <wsdl:import namespace="http://smubank.smu.edu.sg/Account_DCD" location="/Account_DCD.wsdl"/>
     <pd:name>Account_DCD_Update.process</pd:name>
     <pd:startName>Start</pd:startName>
     <pd:startType wsMsgRef="pfx:Account_DCD_Update-Input"/>
     <pd:startX>97</pd:startX>
-    <pd:startY>155</pd:startY>
+    <pd:startY>158</pd:startY>
     <pd:returnBindings/>
     <pd:endName>End</pd:endName>
     <pd:endX>1014</pd:endX>
@@ -87,14 +87,14 @@
             <commit>false</commit>
             <maxRows>100</maxRows>
             <emptyStrAsNil>false</emptyStrAsNil>
-            <statement>select customerID  from account where accountId = ?</statement>
+            <statement>select customerID  from account where accountID = ?</statement>
+            <jdbcSharedConfig>/Connections/Core.sharedjdbc</jdbcSharedConfig>
             <Prepared_Param_DataType>
                 <parameter>
-                    <parameterName>accountId</parameterName>
+                    <parameterName>accountID</parameterName>
                     <dataType>INTEGER</dataType>
                 </parameter>
             </Prepared_Param_DataType>
-            <jdbcSharedConfig>/Connections/Core.sharedjdbc</jdbcSharedConfig>
             <oraObjects/>
             <oraTables/>
             <QueryOutputCachedSchemaColumns>customerID</QueryOutputCachedSchemaColumns>
@@ -104,9 +104,9 @@
         </config>
         <pd:inputBindings>
             <jdbcQueryActivityInput>
-                <accountId>
+                <accountID>
                     <xsl:value-of select="$Start/pfx:Account_DCD_Update-Input/Account_DCD_Update-Request/ns1:accountId"/>
-                </accountId>
+                </accountID>
             </jdbcQueryActivityInput>
         </pd:inputBindings>
     </pd:activity>
