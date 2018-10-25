@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns1="http://www.tibco.com/pe/EngineTypes" xmlns:ns="http://smubank.smu.edu.sg/schemas/Account_DCD" xmlns:ns3="http://smubank.smu.edu.sg/logging" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx3="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx2="http://smubank.smu.edu.sg/Account_DCD" xmlns:pfx="http://smubank.smu.edu.sg/DualCurrency" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<pd:ProcessDefinition xmlns:ns2="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://www.tibco.com/pe/EngineTypes" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://smubank.smu.edu.sg/schemas/Account_DCD" xmlns:ns3="http://smubank.smu.edu.sg/logging" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx3="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx2="http://smubank.smu.edu.sg/Account_DCD" xmlns:pfx="http://smubank.smu.edu.sg/DualCurrency" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <wsdl:import namespace="http://smubank.smu.edu.sg/Account_DCD" location="/Account_DCD.wsdl"/>
     <pd:name>Account_DCD_Create.process</pd:name>
     <pd:startName>Start</pd:startName>
@@ -31,8 +31,8 @@
     </pd:returnBindings>
     <pd:endName>End</pd:endName>
     <pd:endType wsMsgRef="pfx2:Account_DCD_Create_Output"/>
-    <pd:endX>898</pd:endX>
-    <pd:endY>194</pd:endY>
+    <pd:endX>1031</pd:endX>
+    <pd:endY>144</pd:endY>
     <pd:errorSchemas/>
     <pd:processVariables>
         <Status>
@@ -101,7 +101,7 @@
         </pd:inputBindings>
     </pd:activity>
     <pd:group name="Group">
-        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:type>com.tibco.pe.core.TransactionGroup</pd:type>
         <pd:resourceType>ae.process.group</pd:resourceType>
         <pd:x>230</pd:x>
         <pd:y>306</pd:y>
@@ -112,8 +112,10 @@
         <pd:groupVariables/>
         <pd:joinToggle>inherit</pd:joinToggle>
         <config>
-            <pd:groupType>simpleGroup</pd:groupType>
+            <pd:groupType>transactionGroup</pd:groupType>
             <pd:serializable>false</pd:serializable>
+            <pd:transactionType>JDBCTransaction</pd:transactionType>
+            <pd:includeCheckpoint>false</pd:includeCheckpoint>
         </config>
         <pd:inputBindings/>
         <pd:expanded>true</pd:expanded>
@@ -327,7 +329,7 @@
                 <commit>false</commit>
                 <emptyStrAsNil>false</emptyStrAsNil>
                 <jdbcSharedConfig>/Connections/Core.sharedjdbc</jdbcSharedConfig>
-                <statement>insert into account(accountID,customerID,productID,interestRate,currency,title,accountOpenDate,maturityDate,depositTerm,balance,penaltyRate,currentStatus,interestPayoutAccount,settlementAccount,feeDeductionAccount,pledgeOrStopPaymentAccount,narrative,channel,bank_id)
+                <statement>insert into account(accountID,customerID,productID,interestRate,currency,title,accountOpenDate,maturityDate,depositTerm,balance,penaltyRate,currentStatus,interestPayoutAccount,settlementAccount,feeDeductionAccount,pledgeOrStopPaymentAmount,narrative,channel,bank_id)
 values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</statement>
                 <Prepared_Param_DataType>
                     <parameter>
@@ -543,6 +545,14 @@ values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</statement>
             </pd:inputBindings>
         </pd:activity>
     </pd:group>
+    <pd:activity name="Start of Process">
+        <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+        <pd:resourceType>ae.activities.null</pd:resourceType>
+        <pd:x>423</pd:x>
+        <pd:y>182</pd:y>
+        <config/>
+        <pd:inputBindings/>
+    </pd:activity>
     <pd:transition>
         <pd:from>Start</pd:from>
         <pd:to>Set Process Name</pd:to>
@@ -561,7 +571,7 @@ values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</statement>
     </pd:transition>
     <pd:transition>
         <pd:from>Set Process Name</pd:from>
-        <pd:to>Group</pd:to>
+        <pd:to>Start of Process</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
@@ -569,6 +579,20 @@ values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</statement>
     <pd:transition>
         <pd:from>Group</pd:from>
         <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>LoggingPt4</pd:from>
+        <pd:to>Start of Process</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start of Process</pd:from>
+        <pd:to>Group</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
