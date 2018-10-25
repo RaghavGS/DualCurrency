@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://smubank.smu.edu.sg/logging" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx2="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx="http://smubank.smu.edu.sg/Account_DCD">
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://smubank.smu.edu.sg/schemas/Account_DCD" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://smubank.smu.edu.sg/logging" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx2="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx="http://smubank.smu.edu.sg/Account_DCD">
     <wsdl:import namespace="http://smubank.smu.edu.sg/Account_DCD" location="/Account_DCD.wsdl"/>
     <pd:name>Account_DCD_Update.process</pd:name>
     <pd:startName>Start</pd:startName>
@@ -80,78 +80,87 @@
     <pd:activity name="Check if Account Exists">
         <pd:type>com.tibco.plugin.jdbc.JDBCQueryActivity</pd:type>
         <pd:resourceType>ae.activities.JDBCQueryActivity</pd:resourceType>
-        <pd:x>342</pd:x>
+        <pd:x>341</pd:x>
         <pd:y>161</pd:y>
         <config>
             <timeout>10</timeout>
             <commit>false</commit>
             <maxRows>100</maxRows>
             <emptyStrAsNil>false</emptyStrAsNil>
+            <statement>select customerID  from account where accountId = ?</statement>
+            <Prepared_Param_DataType>
+                <parameter>
+                    <parameterName>accountId</parameterName>
+                    <dataType>INTEGER</dataType>
+                </parameter>
+            </Prepared_Param_DataType>
+            <jdbcSharedConfig>/Connections/Core.sharedjdbc</jdbcSharedConfig>
+            <oraObjects/>
+            <oraTables/>
+            <QueryOutputCachedSchemaColumns>customerID</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>4</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>INT UNSIGNED</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>
         </config>
         <pd:inputBindings>
-            <jdbcQueryActivityInput/>
+            <jdbcQueryActivityInput>
+                <accountId>
+                    <xsl:value-of select="$Start/pfx:Account_DCD_Update-Input/Account_DCD_Update-Request/ns1:accountId"/>
+                </accountId>
+            </jdbcQueryActivityInput>
         </pd:inputBindings>
     </pd:activity>
-    <pd:activity name="JDBC Update">
+    <pd:activity name="Update Status">
         <pd:type>com.tibco.plugin.jdbc.JDBCUpdateActivity</pd:type>
         <pd:resourceType>ae.activities.JDBCUpdateActivity</pd:resourceType>
-        <pd:x>419</pd:x>
-        <pd:y>312</pd:y>
+        <pd:x>344</pd:x>
+        <pd:y>268</pd:y>
         <config>
             <timeout>10</timeout>
             <commit>false</commit>
             <emptyStrAsNil>false</emptyStrAsNil>
+            <jdbcSharedConfig>/Connections/Core.sharedjdbc</jdbcSharedConfig>
+            <statement>update account set currentStatus = ? where accountId = ?</statement>
+            <Prepared_Param_DataType>
+                <parameter>
+                    <parameterName>currentStatus</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>accountId</parameterName>
+                    <dataType>INTEGER</dataType>
+                </parameter>
+            </Prepared_Param_DataType>
         </config>
         <pd:inputBindings>
-            <jdbcUpdateActivityInput/>
-        </pd:inputBindings>
-    </pd:activity>
-    <pd:activity name="JDBC-Update-1">
-        <pd:type>com.tibco.plugin.jdbc.JDBCUpdateActivity</pd:type>
-        <pd:resourceType>ae.activities.JDBCUpdateActivity</pd:resourceType>
-        <pd:x>422</pd:x>
-        <pd:y>446</pd:y>
-        <config>
-            <timeout>10</timeout>
-            <commit>false</commit>
-            <emptyStrAsNil>false</emptyStrAsNil>
-        </config>
-        <pd:inputBindings>
-            <jdbcUpdateActivityInput/>
-        </pd:inputBindings>
-    </pd:activity>
-    <pd:activity name="JDBC-Update-2">
-        <pd:type>com.tibco.plugin.jdbc.JDBCUpdateActivity</pd:type>
-        <pd:resourceType>ae.activities.JDBCUpdateActivity</pd:resourceType>
-        <pd:x>628</pd:x>
-        <pd:y>452</pd:y>
-        <config>
-            <timeout>10</timeout>
-            <commit>false</commit>
-            <emptyStrAsNil>false</emptyStrAsNil>
-        </config>
-        <pd:inputBindings>
-            <jdbcUpdateActivityInput/>
+            <jdbcUpdateActivityInput>
+                <currentStatus>
+                    <xsl:value-of select="$Start/pfx:Account_DCD_Update-Input/Account_DCD_Update-Request/ns1:status"/>
+                </currentStatus>
+                <accountId>
+                    <xsl:value-of select="$Start/pfx:Account_DCD_Update-Input/Account_DCD_Update-Request/ns1:accountId"/>
+                </accountId>
+            </jdbcUpdateActivityInput>
         </pd:inputBindings>
     </pd:activity>
     <pd:activity name="Success">
         <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
         <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-        <pd:x>631</pd:x>
-        <pd:y>309</pd:y>
+        <pd:x>581</pd:x>
+        <pd:y>266</pd:y>
         <config>
             <variableName>Status</variableName>
         </config>
         <pd:inputBindings>
             <root>
                 <ErrorDetail>
-                    <xsl:value-of select="'010000'"/>
+                    <xsl:value-of select="''"/>
                 </ErrorDetail>
                 <ErrorText>
                     <xsl:value-of select="''"/>
                 </ErrorText>
                 <GlobalErrorID>
-                    <xsl:value-of select="''"/>
+                    <xsl:value-of select="'010000'"/>
                 </GlobalErrorID>
             </root>
         </pd:inputBindings>
@@ -159,8 +168,8 @@
     <pd:activity name="Account Not Found">
         <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
         <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-        <pd:x>477</pd:x>
-        <pd:y>77</pd:y>
+        <pd:x>521</pd:x>
+        <pd:y>108</pd:y>
         <config>
             <variableName>Status</variableName>
         </config>
@@ -216,8 +225,8 @@
     <pd:activity name="Get Error Text">
         <pd:type>com.tibco.plugin.jdbc.JDBCQueryActivity</pd:type>
         <pd:resourceType>ae.activities.JDBCQueryActivity</pd:resourceType>
-        <pd:x>783</pd:x>
-        <pd:y>169</pd:y>
+        <pd:x>774</pd:x>
+        <pd:y>167</pd:y>
         <config>
             <timeout>10</timeout>
             <commit>false</commit>
@@ -233,9 +242,12 @@ WHERE `globalerrorid` = ?;</statement>
                     <dataType>VARCHAR</dataType>
                 </parameter>
             </Prepared_Param_DataType>
+            <ConfigurationError>JDBC Connection failed: Unknown database 'mdm'</ConfigurationError>
         </config>
         <pd:inputBindings>
-            <jdbcQueryActivityInput/>
+            <jdbcQueryActivityInput>
+                <xsl:value-of select="$Status/root/GlobalErrorID"/>
+            </jdbcQueryActivityInput>
         </pd:inputBindings>
     </pd:activity>
     <pd:transition>
@@ -263,41 +275,15 @@ WHERE `globalerrorid` = ?;</statement>
     </pd:transition>
     <pd:transition>
         <pd:from>Check if Account Exists</pd:from>
-        <pd:to>JDBC Update</pd:to>
+        <pd:to>Update Status</pd:to>
+        <pd:xpathDescription>Has Account</pd:xpathDescription>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>count($Check-if-Account-Exists/resultSet/Record)&gt;0</pd:xpath>
     </pd:transition>
     <pd:transition>
-        <pd:from>JDBC Update</pd:from>
-        <pd:to>JDBC-Update-1</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>JDBC Update</pd:from>
-        <pd:to>Success</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>JDBC-Update-1</pd:from>
-        <pd:to>Success</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>JDBC-Update-1</pd:from>
-        <pd:to>JDBC-Update-2</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>JDBC-Update-2</pd:from>
+        <pd:from>Update Status</pd:from>
         <pd:to>Success</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
