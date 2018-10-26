@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://smubank.smu.edu.sg/schemas/Account_DCD" xmlns:ns3="http://smubank.smu.edu.sg/logging" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx2="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx="http://smubank.smu.edu.sg/Account_DCD">
-    <wsdl:import namespace="http://smubank.smu.edu.sg/Account_DCD" location="/Account_DCD.wsdl"/>
+    <wsdl:import namespace="http://smubank.smu.edu.sg/Account_DCD"/>
     <pd:name>Account_DCD_Read.process</pd:name>
     <pd:startName>Start</pd:startName>
     <pd:startType wsMsgRef="pfx:Account_DCD_Read-Input"/>
     <pd:startX>36</pd:startX>
-    <pd:startY>174</pd:startY>
+    <pd:startY>173</pd:startY>
     <pd:returnBindings>
         <pfx:Account_DCD_Read-Output>
             <Account_DCD_Read-Response>
@@ -82,7 +82,7 @@
     </pd:returnBindings>
     <pd:endName>End</pd:endName>
     <pd:endType wsMsgRef="pfx:Account_DCD_Read-Output"/>
-    <pd:endX>939</pd:endX>
+    <pd:endX>940</pd:endX>
     <pd:endY>160</pd:endY>
     <pd:errorSchemas/>
     <pd:processVariables>
@@ -101,7 +101,7 @@
             <xsd:element name="ProcessName" type="xsd:string"/>
         </Metadata>
     </pd:processVariables>
-    <pd:targetNamespace>http://xmlns.example.com/1539333606536</pd:targetNamespace>
+    <pd:targetNamespace>http://smubank.smu.edu.sg/Account_DCD/Read</pd:targetNamespace>
     <pd:activity name="Set Process Name">
         <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
         <pd:resourceType>ae.activities.assignActivity</pd:resourceType>

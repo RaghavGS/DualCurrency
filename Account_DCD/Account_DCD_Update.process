@@ -1,13 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://smubank.smu.edu.sg/schemas/Account_DCD" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://smubank.smu.edu.sg/logging" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx2="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx="http://smubank.smu.edu.sg/Account_DCD">
+<pd:ProcessDefinition xmlns:ns2="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://smubank.smu.edu.sg/schemas/Account_DCD" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://smubank.smu.edu.sg/logging" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx2="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx="http://smubank.smu.edu.sg/Account_DCD">
+    <wsdl:import namespace="http://smubank.smu.edu.sg/Account_DCD"/>
     <wsdl:import namespace="http://smubank.smu.edu.sg/Account_DCD" location="/Account_DCD.wsdl"/>
     <pd:name>Account_DCD_Update.process</pd:name>
     <pd:startName>Start</pd:startName>
     <pd:startType wsMsgRef="pfx:Account_DCD_Update-Input"/>
     <pd:startX>97</pd:startX>
     <pd:startY>158</pd:startY>
-    <pd:returnBindings/>
+    <pd:returnBindings>
+        <pfx:Account_DCD_Update-Output>
+            <ServiceRespHeader>
+                <ns2:GlobalErrorID>
+                    <xsl:value-of select="$Status/root/GlobalErrorID"/>
+                </ns2:GlobalErrorID>
+                <ns2:ErrorText>
+                    <xsl:value-of select="$Get-Error-Text/resultSet/Record[1]/errortext"/>
+                </ns2:ErrorText>
+                <ns2:ErrorDetails>
+                    <xsl:value-of select="$Status/root/ErrorDetail"/>
+                </ns2:ErrorDetails>
+            </ServiceRespHeader>
+        </pfx:Account_DCD_Update-Output>
+    </pd:returnBindings>
     <pd:endName>End</pd:endName>
+    <pd:endType wsMsgRef="pfx:Account_DCD_Update-Output"/>
     <pd:endX>1014</pd:endX>
     <pd:endY>170</pd:endY>
     <pd:errorSchemas/>
@@ -27,7 +43,7 @@
             <xsd:element name="ProcessName" type="xsd:string"/>
         </Metadata>
     </pd:processVariables>
-    <pd:targetNamespace>http://xmlns.example.com/1539334522313</pd:targetNamespace>
+    <pd:targetNamespace>http://smubank.smu.edu.sg/Account_DCD/Update</pd:targetNamespace>
     <pd:activity name="Set Process Name">
         <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
         <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
@@ -225,7 +241,7 @@
     <pd:activity name="Get Error Text">
         <pd:type>com.tibco.plugin.jdbc.JDBCQueryActivity</pd:type>
         <pd:resourceType>ae.activities.JDBCQueryActivity</pd:resourceType>
-        <pd:x>774</pd:x>
+        <pd:x>775</pd:x>
         <pd:y>167</pd:y>
         <config>
             <timeout>10</timeout>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <serviceResource xmlns:wsdl="http://smubank.smu.edu.sg/Account_DCD">
+    <ns0:import xmlns:ns0="http://schemas.xmlsoap.org/wsdl/" namespace="http://smubank.smu.edu.sg/Account_DCD"/>
     <ns0:import xmlns:ns0="http://schemas.xmlsoap.org/wsdl/" namespace="http://smubank.smu.edu.sg/Account_DCD" location="/Account_DCD.wsdl"/>
     <config>
         <class>com.tibco.bw.service.serviceAgent.ServiceServiceAgent</class>
@@ -7,9 +8,10 @@
         <groups>
             <row isDefault="true" groupName="Default"/>
         </groups>
-        <serviceChange>Fri Oct 12 17:21:39 SGT 2018</serviceChange>
+        <serviceChange>Fri Oct 26 18:20:16 SGT 2018</serviceChange>
         <name>Account_DCD</name>
         <resourceType>service.definition</resourceType>
+        <wsdl namespace="http://smubank.smu.edu.sg/Account_DCD" embedWsdlComponents="true" embedSchemaComponents="true" embedJndiProperties="false"/>
         <interfaceImpl>
             <tab>
                 <tabName>Account_DCD</tabName>
@@ -193,6 +195,5 @@
                 </config>
             </tab>
         </interfaceImpl>
-        <wsdl namespace="http://smubank.smu.edu.sg/Account_DCD" embedWsdlComponents="true" embedSchemaComponents="true" embedJndiProperties="false"/>
     </config>
 </serviceResource>

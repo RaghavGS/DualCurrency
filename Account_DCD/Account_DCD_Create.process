@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:ns2="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://www.tibco.com/pe/EngineTypes" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://smubank.smu.edu.sg/schemas/Account_DCD" xmlns:ns3="http://smubank.smu.edu.sg/logging" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx3="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx2="http://smubank.smu.edu.sg/Account_DCD" xmlns:pfx="http://smubank.smu.edu.sg/DualCurrency" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://smubank.smu.edu.sg/schemas/Account_DCD" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pfx="http://smubank.smu.edu.sg/DualCurrency" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" xmlns:ns1="http://www.tibco.com/pe/EngineTypes" xmlns:ns4="http://schemas.tibco.com/bw/plugins/jdbc/5.0/jdbcExceptions" xmlns:ns3="http://smubank.smu.edu.sg/logging" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx3="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx2="http://smubank.smu.edu.sg/Account_DCD" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <wsdl:import namespace="http://smubank.smu.edu.sg/Account_DCD"/>
     <wsdl:import namespace="http://smubank.smu.edu.sg/Account_DCD" location="/Account_DCD.wsdl"/>
     <pd:name>Account_DCD_Create.process</pd:name>
     <pd:startName>Start</pd:startName>
@@ -7,32 +8,32 @@
     <pd:startX>161</pd:startX>
     <pd:startY>235</pd:startY>
     <pd:returnBindings>
-        <pfx2:Account_DCD_Create_Output>
-            <Account_DCD_Create-Response>
-                <ns:accountId>
-                    <xsl:value-of select="$Get-DCD-Account-ID/resultSet/Record[1]/last_insert_id"/>
-                </ns:accountId>
-                <ns:customerId>
-                    <xsl:value-of select="$Check-if-CustomerID-Exists/resultSet/Record[1]/customerID"/>
-                </ns:customerId>
-            </Account_DCD_Create-Response>
+        <pfx2:Account_DCD_Create-Output>
             <ServiceRespHeader>
                 <ns2:GlobalErrorID>
                     <xsl:value-of select="$Status/root/GlobalErrorID"/>
                 </ns2:GlobalErrorID>
                 <ns2:ErrorText>
-                    <xsl:value-of select="$Status/root/ErrorText"/>
+                    <xsl:value-of select="$Get-Error-Text/resultSet/Record[1]/errortext"/>
                 </ns2:ErrorText>
                 <ns2:ErrorDetails>
                     <xsl:value-of select="$Status/root/ErrorDetail"/>
                 </ns2:ErrorDetails>
             </ServiceRespHeader>
-        </pfx2:Account_DCD_Create_Output>
+            <Account_DCD_Create-Response>
+                <ns:accountId>
+                    <xsl:value-of select="$Get-DCD-Account-ID/resultSet/Record[1]/last_insert_id"/>
+                </ns:accountId>
+                <ns:customerId>
+                    <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/Account_DCD_Create-Request/ns:customerId"/>
+                </ns:customerId>
+            </Account_DCD_Create-Response>
+        </pfx2:Account_DCD_Create-Output>
     </pd:returnBindings>
     <pd:endName>End</pd:endName>
-    <pd:endType wsMsgRef="pfx2:Account_DCD_Create_Output"/>
-    <pd:endX>1031</pd:endX>
-    <pd:endY>144</pd:endY>
+    <pd:endType wsMsgRef="pfx2:Account_DCD_Create-Output"/>
+    <pd:endX>1051</pd:endX>
+    <pd:endY>192</pd:endY>
     <pd:errorSchemas/>
     <pd:processVariables>
         <Status>
@@ -50,7 +51,7 @@
             <xsd:element name="ProcessName" type="xsd:string"/>
         </Metadata>
     </pd:processVariables>
-    <pd:targetNamespace>http://xmlns.example.com/1539329785805</pd:targetNamespace>
+    <pd:targetNamespace>http://smubank.smu.edu.sg/Account_DCD/Create</pd:targetNamespace>
     <pd:activity name="LoggingPt4">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
@@ -103,10 +104,10 @@
     <pd:group name="Group">
         <pd:type>com.tibco.pe.core.TransactionGroup</pd:type>
         <pd:resourceType>ae.process.group</pd:resourceType>
-        <pd:x>230</pd:x>
-        <pd:y>306</pd:y>
+        <pd:x>258</pd:x>
+        <pd:y>307</pd:y>
         <pd:width>879</pd:width>
-        <pd:height>298</pd:height>
+        <pd:height>432</pd:height>
         <pd:collapsedWidth>57</pd:collapsedWidth>
         <pd:collapsedHeight>70</pd:collapsedHeight>
         <pd:groupVariables/>
@@ -122,6 +123,20 @@
         <pd:transition>
             <pd:from>start</pd:from>
             <pd:to>Start Transaction</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Rollback (Error)</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Rollback</pd:from>
+            <pd:to>end</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>always</pd:conditionType>
@@ -176,6 +191,36 @@
             <pd:conditionType>always</pd:conditionType>
         </pd:transition>
         <pd:transition>
+            <pd:from>Check if CustomerID Exists</pd:from>
+            <pd:to>Not Found</pd:to>
+            <pd:xpathDescription>no customer</pd:xpathDescription>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-65536</pd:lineColor>
+            <pd:conditionType>xpath</pd:conditionType>
+            <pd:xpath>empty($Check-if-CustomerID-Exists/resultSet/Record/customerID)</pd:xpath>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Not Found</pd:from>
+            <pd:to>Rollback</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Catch</pd:from>
+            <pd:to>Error</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Error</pd:from>
+            <pd:to>Rollback (Error)</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
             <pd:from>Commit</pd:from>
             <pd:to>Null</pd:to>
             <pd:lineType>Default</pd:lineType>
@@ -192,8 +237,8 @@
         <pd:activity name="Start Transaction">
             <pd:type>com.tibco.plugin.jdbc.JDBCGeneralActivity</pd:type>
             <pd:resourceType>ae.activities.JDBCGeneralActivity</pd:resourceType>
-            <pd:x>323</pd:x>
-            <pd:y>379</pd:y>
+            <pd:x>349</pd:x>
+            <pd:y>380</pd:y>
             <config>
                 <timeout>10</timeout>
                 <commit>false</commit>
@@ -211,8 +256,8 @@
         <pd:activity name="Set READ COMMITTED">
             <pd:type>com.tibco.plugin.jdbc.JDBCGeneralActivity</pd:type>
             <pd:resourceType>ae.activities.JDBCGeneralActivity</pd:resourceType>
-            <pd:x>317</pd:x>
-            <pd:y>510</pd:y>
+            <pd:x>343</pd:x>
+            <pd:y>511</pd:y>
             <config>
                 <timeout>10</timeout>
                 <commit>false</commit>
@@ -230,8 +275,8 @@
         <pd:activity name="Check if CustomerID Exists">
             <pd:type>com.tibco.plugin.jdbc.JDBCQueryActivity</pd:type>
             <pd:resourceType>ae.activities.JDBCQueryActivity</pd:resourceType>
-            <pd:x>461</pd:x>
-            <pd:y>521</pd:y>
+            <pd:x>487</pd:x>
+            <pd:y>522</pd:y>
             <config>
                 <timeout>10</timeout>
                 <commit>false</commit>
@@ -267,8 +312,8 @@
         <pd:activity name="Get Product Parameters">
             <pd:type>com.tibco.plugin.jdbc.JDBCQueryActivity</pd:type>
             <pd:resourceType>ae.activities.JDBCQueryActivity</pd:resourceType>
-            <pd:x>459</pd:x>
-            <pd:y>385</pd:y>
+            <pd:x>485</pd:x>
+            <pd:y>386</pd:y>
             <config>
                 <timeout>10</timeout>
                 <commit>false</commit>
@@ -322,20 +367,16 @@
         <pd:activity name="Create Account">
             <pd:type>com.tibco.plugin.jdbc.JDBCUpdateActivity</pd:type>
             <pd:resourceType>ae.activities.JDBCUpdateActivity</pd:resourceType>
-            <pd:x>600</pd:x>
+            <pd:x>601</pd:x>
             <pd:y>384</pd:y>
             <config>
                 <timeout>10</timeout>
                 <commit>false</commit>
                 <emptyStrAsNil>false</emptyStrAsNil>
                 <jdbcSharedConfig>/Connections/Core.sharedjdbc</jdbcSharedConfig>
-                <statement>insert into account(accountID,customerID,productID,interestRate,currency,title,accountOpenDate,maturityDate,depositTerm,balance,penaltyRate,currentStatus,interestPayoutAccount,settlementAccount,feeDeductionAccount,pledgeOrStopPaymentAmount,narrative,channel,bank_id)
-values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</statement>
+                <statement>insert into account(customerID,productID,interestRate,currency,title,accountOpenDate,maturityDate,depositTerm,balance,penaltyRate,currentStatus,interestPayoutAccount,settlementAccount,feeDeductionAccount,pledgeOrStopPaymentAmount,narrative,channel,bank_id)
+values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</statement>
                 <Prepared_Param_DataType>
-                    <parameter>
-                        <parameterName>accountID</parameterName>
-                        <dataType>INTEGER</dataType>
-                    </parameter>
                     <parameter>
                         <parameterName>customerID</parameterName>
                         <dataType>INTEGER</dataType>
@@ -412,9 +453,6 @@ values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</statement>
             </config>
             <pd:inputBindings>
                 <jdbcUpdateActivityInput>
-                    <accountID>
-                        <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/Account_DCD_Create-Request/ns:accountId"/>
-                    </accountID>
                     <customerID>
                         <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/Account_DCD_Create-Request/ns:customerId"/>
                     </customerID>
@@ -475,8 +513,8 @@ values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</statement>
         <pd:activity name="Get DCD Account ID">
             <pd:type>com.tibco.plugin.jdbc.JDBCQueryActivity</pd:type>
             <pd:resourceType>ae.activities.JDBCQueryActivity</pd:resourceType>
-            <pd:x>604</pd:x>
-            <pd:y>521</pd:y>
+            <pd:x>599</pd:x>
+            <pd:y>523</pd:y>
             <config>
                 <timeout>10</timeout>
                 <commit>false</commit>
@@ -498,8 +536,8 @@ values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</statement>
         <pd:activity name="Commit">
             <pd:type>com.tibco.plugin.jdbc.JDBCGeneralActivity</pd:type>
             <pd:resourceType>ae.activities.JDBCGeneralActivity</pd:resourceType>
-            <pd:x>760</pd:x>
-            <pd:y>532</pd:y>
+            <pd:x>726</pd:x>
+            <pd:y>523</pd:y>
             <config>
                 <timeout>10</timeout>
                 <commit>false</commit>
@@ -514,35 +552,128 @@ values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</statement>
                 </jdbcGeneralActivityInput>
             </pd:inputBindings>
         </pd:activity>
-        <pd:activity name="Null">
-            <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
-            <pd:resourceType>ae.activities.null</pd:resourceType>
-            <pd:x>763</pd:x>
-            <pd:y>384</pd:y>
-            <config/>
-            <pd:inputBindings/>
-        </pd:activity>
         <pd:activity name="Success">
             <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
             <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-            <pd:x>906</pd:x>
-            <pd:y>388</pd:y>
+            <pd:x>860</pd:x>
+            <pd:y>394</pd:y>
             <config>
                 <variableName>Status</variableName>
             </config>
             <pd:inputBindings>
                 <root>
                     <GlobalErrorID>
-                        <xsl:value-of select="$Status/root/GlobalErrorID"/>
+                        <xsl:value-of select="&quot;010000&quot;"/>
                     </GlobalErrorID>
                     <ErrorText>
-                        <xsl:value-of select="$Status/root/ErrorText"/>
+                        <xsl:value-of select="&quot;&quot;"/>
                     </ErrorText>
                     <ErrorDetail>
-                        <xsl:value-of select="$Status/root/ErrorDetail"/>
+                        <xsl:value-of select="&quot;&quot;"/>
                     </ErrorDetail>
                 </root>
             </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Not Found">
+            <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+            <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+            <pd:x>485</pd:x>
+            <pd:y>618</pd:y>
+            <config>
+                <variableName>Status</variableName>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <GlobalErrorID>
+                        <xsl:value-of select="'010010'"/>
+                    </GlobalErrorID>
+                    <ErrorText>
+                        <xsl:value-of select="''"/>
+                    </ErrorText>
+                    <ErrorDetail>
+                        <xsl:value-of select="'customer record not found'"/>
+                    </ErrorDetail>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Rollback">
+            <pd:type>com.tibco.plugin.jdbc.JDBCGeneralActivity</pd:type>
+            <pd:resourceType>ae.activities.JDBCGeneralActivity</pd:resourceType>
+            <pd:x>870</pd:x>
+            <pd:y>627</pd:y>
+            <config>
+                <timeout>10</timeout>
+                <commit>false</commit>
+                <maxRows>100</maxRows>
+                <jdbcSharedConfig>/Connections/Core.sharedjdbc</jdbcSharedConfig>
+            </config>
+            <pd:inputBindings>
+                <jdbcGeneralActivityInput>
+                    <statement>
+                        <xsl:value-of select="'ROLLBACK;'"/>
+                    </statement>
+                </jdbcGeneralActivityInput>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Catch">
+            <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+            <pd:resourceType>ae.activities.catch</pd:resourceType>
+            <pd:x>671</pd:x>
+            <pd:y>679</pd:y>
+            <pd:handler>true</pd:handler>
+            <config>
+                <fault>localname=JDBCSQLException namespace=http://schemas.tibco.com/bw/plugins/jdbc/5.0/jdbcExceptions</fault>
+            </config>
+            <pd:inputBindings/>
+        </pd:activity>
+        <pd:activity name="Error">
+            <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+            <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+            <pd:x>869</pd:x>
+            <pd:y>682</pd:y>
+            <config>
+                <variableName>Status</variableName>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <GlobalErrorID>
+                        <xsl:value-of select="'010021'"/>
+                    </GlobalErrorID>
+                    <ErrorText>
+                        <xsl:value-of select="''"/>
+                    </ErrorText>
+                    <ErrorDetail>
+                        <xsl:value-of select="$Catch/ns4:JDBCSQLException/msg"/>
+                    </ErrorDetail>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Rollback (Error)">
+            <pd:type>com.tibco.plugin.jdbc.JDBCGeneralActivity</pd:type>
+            <pd:resourceType>ae.activities.JDBCGeneralActivity</pd:resourceType>
+            <pd:x>1042</pd:x>
+            <pd:y>681</pd:y>
+            <config>
+                <timeout>10</timeout>
+                <commit>false</commit>
+                <maxRows>100</maxRows>
+                <jdbcSharedConfig>/Connections/Core.sharedjdbc</jdbcSharedConfig>
+            </config>
+            <pd:inputBindings>
+                <jdbcGeneralActivityInput>
+                    <statement>
+                        <xsl:value-of select="'ROLLBACK;'"/>
+                    </statement>
+                </jdbcGeneralActivityInput>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Null">
+            <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+            <pd:resourceType>ae.activities.null</pd:resourceType>
+            <pd:x>793</pd:x>
+            <pd:y>431</pd:y>
+            <config/>
+            <pd:inputBindings/>
         </pd:activity>
     </pd:group>
     <pd:activity name="Start of Process">
@@ -552,6 +683,98 @@ values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</statement>
         <pd:y>182</pd:y>
         <config/>
         <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Get Error Text">
+        <pd:type>com.tibco.plugin.jdbc.JDBCQueryActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCQueryActivity</pd:resourceType>
+        <pd:x>775</pd:x>
+        <pd:y>197</pd:y>
+        <config>
+            <timeout>10</timeout>
+            <commit>false</commit>
+            <maxRows>100</maxRows>
+            <emptyStrAsNil>false</emptyStrAsNil>
+            <jdbcSharedConfig>/Connections/MDM.sharedjdbc</jdbcSharedConfig>
+            <statement>SELECT `errortext` 
+FROM `global_errorreference` 
+WHERE `globalerrorid` = ?;</statement>
+            <Prepared_Param_DataType>
+                <parameter>
+                    <parameterName>global_errorreference</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+            </Prepared_Param_DataType>
+            <oraObjects/>
+            <oraTables/>
+            <QueryOutputCachedSchemaColumns>errortext</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>
+        </config>
+        <pd:inputBindings>
+            <jdbcQueryActivityInput>
+                <global_errorreference>
+                    <xsl:value-of select="$Status/root/GlobalErrorID"/>
+                </global_errorreference>
+            </jdbcQueryActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Timeout">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>670</pd:x>
+        <pd:y>197</pd:y>
+        <config>
+            <variableName>Status</variableName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <GlobalErrorID>
+                    <xsl:value-of select="'010021'"/>
+                </GlobalErrorID>
+                <ErrorText>
+                    <xsl:value-of select="''"/>
+                </ErrorText>
+                <ErrorDetail>
+                    <xsl:value-of select="'timeout creating deposit account'"/>
+                </ErrorDetail>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="LogPoint5">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>910</pd:x>
+        <pd:y>71</pd:y>
+        <config>
+            <processName>/writeLog.process</processName>
+            <spawn>true</spawn>
+        </config>
+        <pd:inputBindings>
+            <ns3:InputMessage>
+                <ConsumerID>
+                    <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/ServiceReqHeader/ConsumerID"/>
+                </ConsumerID>
+                <TransactionID>
+                    <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/ServiceReqHeader/TransactionID"/>
+                </TransactionID>
+                <RequestUUID>
+                    <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/ServiceReqHeader/RequestUUID"/>
+                </RequestUUID>
+                <OperationName>
+                    <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/ServiceReqHeader/OperationName"/>
+                </OperationName>
+                <ProcessName>
+                    <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/ServiceReqHeader/Priority"/>
+                </ProcessName>
+                <LoggingPointNo>
+                    <xsl:value-of select="5"/>
+                </LoggingPointNo>
+                <ErrorMsg>
+                    <xsl:value-of select="$Status/root/ErrorDetail"/>
+                </ErrorMsg>
+            </ns3:InputMessage>
+        </pd:inputBindings>
     </pd:activity>
     <pd:transition>
         <pd:from>Start</pd:from>
@@ -578,7 +801,7 @@ values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</statement>
     </pd:transition>
     <pd:transition>
         <pd:from>Group</pd:from>
-        <pd:to>End</pd:to>
+        <pd:to>Get Error Text</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
@@ -593,6 +816,45 @@ values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</statement>
     <pd:transition>
         <pd:from>Start of Process</pd:from>
         <pd:to>Group</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get Error Text</pd:from>
+        <pd:to>End</pd:to>
+        <pd:xpathDescription>Otherwise</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Group</pd:from>
+        <pd:to>Timeout</pd:to>
+        <pd:xpathDescription>Error</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Timeout</pd:from>
+        <pd:to>Get Error Text</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get Error Text</pd:from>
+        <pd:to>LogPoint5</pd:to>
+        <pd:xpathDescription>log is on</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$_globalVariables/pfx3:GlobalVariables/Logging/LogAll = "true" or $_globalVariables/pfx3:GlobalVariables/Logging/LogPt5 = "true"</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>LogPoint5</pd:from>
+        <pd:to>End</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
