@@ -25,12 +25,16 @@
         <xs:schema xmlns="http://smubank.smu.edu.sg/schemas/Account_DCD" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://smubank.smu.edu.sg/schemas/Account_DCD" elementFormDefault="qualified" attributeFormDefault="unqualified">
             <xs:complexType name="Account_DCD_Create-Request">
                 <xs:sequence>
+                    <xs:element ref="ns1:accountId"/>
                     <xs:element ref="ns1:customerId"/>
                     <xs:element ref="ns1:productId"/>
+                    <xs:element ref="ns1:interestRate"/>
                     <xs:element ref="ns1:baseCurrency"/>
                     <xs:element ref="ns1:quoteCurrency"/>
                     <xs:element ref="ns1:startDate"/>
                     <xs:element ref="ns1:maturityDate"/>
+                    <xs:element ref="ns1:termPeriod"/>
+                    <xs:element ref="ns1:penaltyRate"/>
                     <xs:element ref="ns1:depositAmount"/>
                     <xs:element ref="ns1:interestPayoutAccount"/>
                     <xs:element ref="ns1:feeDeductionAccount"/>
