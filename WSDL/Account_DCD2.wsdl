@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:ns2="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" xmlns:ns1="http://smubank.smu.edu.sg/schemas/Account_DCD" xmlns:tns="http://smubank.smu.edu.sg/Account_DCD" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns0="http://smubank.smu.edu.sg/schemas/serviceRequestMessage/" xmlns:jms="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS" xmlns:soap1="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:jndi="http://www.tibco.com/namespaces/ws/2004/soap/apis/jndi" name="Untitled" targetNamespace="http://smubank.smu.edu.sg/Account_DCD">
+    <wsdl:types>
+        <xs:schema xmlns:tns="http://smubank.smu.edu.sg/schemas/serviceRequestMessage/" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://smubank.smu.edu.sg/schemas/serviceRequestMessage/" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+            <xs:complexType name="Content">
+                <xs:sequence>
+                    <xs:element ref="tns:ServiceReqHeader"/>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax" namespace="##any"/>
+                </xs:sequence>
+                <xs:anyAttribute processContents="lax" namespace="##any"/>
+            </xs:complexType>
+            <xs:complexType name="ServiceReqHeader">
+                <xs:sequence>
+                    <xs:element name="ConsumerID" type="xs:string"/>
+                    <xs:element name="TransactionID" type="xs:string"/>
+                    <xs:element name="RequestUUID" type="xs:string"/>
+                    <xs:element name="OperationName" type="xs:string"/>
+                    <xs:element name="Priority" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="Content" type="tns:Content"/>
+            <xs:element name="ServiceReqHeader" type="tns:ServiceReqHeader"/>
+        </xs:schema>
+        <xs:schema xmlns="http://smubank.smu.edu.sg/schemas/Account_DCD" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://smubank.smu.edu.sg/schemas/Account_DCD" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xs:complexType name="Account_DCD_Create-Request">
+                <xs:sequence>
+                    <xs:element ref="ns1:customerId"/>
+                    <xs:element ref="ns1:productId"/>
+                    <xs:element ref="ns1:baseCurrency"/>
+                    <xs:element ref="ns1:quoteCurrency"/>
+                    <xs:element ref="ns1:startDate"/>
+                    <xs:element ref="ns1:maturityDate"/>
+                    <xs:element ref="ns1:depositAmount"/>
+                    <xs:element ref="ns1:interestPayoutAccount"/>
+                    <xs:element ref="ns1:feeDeductionAccount"/>
+                    <xs:element ref="ns1:settlementAccount"/>
+                    <xs:element ref="ns1:status"/>
+                    <xs:element ref="ns1:strikeRate"/>
+                    <xs:element ref="ns1:narrative"/>
+                    <xs:element ref="ns1:channel"/>
+                    <xs:element ref="ns1:bankId"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Account_DCD_Create-Response">
+                <xs:sequence>
+                    <xs:element ref="ns1:accountId"/>
+                    <xs:element ref="ns1:customerId"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Account_DCD_Read-Request">
+                <xs:sequence>
+                    <xs:element ref="ns1:accountId"/>
+                    <xs:element ref="ns1:customerId"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Account_DCD_Read-Response">
+                <xs:sequence>
+                    <xs:element ref="ns1:accountId"/>
+                    <xs:element ref="ns1:customerId"/>
+                    <xs:element ref="ns1:productId"/>
+                    <xs:element ref="ns1:interestRate"/>
+                    <xs:element ref="ns1:baseCurrency"/>
+                    <xs:element ref="ns1:quoteCurrency"/>
+                    <xs:element ref="ns1:startDate"/>
+                    <xs:element ref="ns1:maturityDate"/>
+                    <xs:element ref="ns1:termPeriod"/>
+                    <xs:element ref="ns1:penaltyRate"/>
+                    <xs:element ref="ns1:depositAmount"/>
+                    <xs:element ref="ns1:interestPayoutAccount"/>
+                    <xs:element ref="ns1:feeDeductionAccount"/>
+                    <xs:element ref="ns1:settlementAccount"/>
+                    <xs:element ref="ns1:status"/>
+                    <xs:element ref="ns1:strikeRate"/>
+                    <xs:element ref="ns1:narrative"/>
+                    <xs:element ref="ns1:channel"/>
+                    <xs:element ref="ns1:bankId"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Account_DCD_Update-Request">
+                <xs:sequence>
+                    <xs:element ref="ns1:accountId"/>
+                    <xs:element ref="ns1:customerId"/>
+                    <xs:element name="status" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="accountId">
+                <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                        <xs:totalDigits value="10"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="bankId">
+                <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                        <xs:totalDigits value="10"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="baseCurrency" type="xs:string"/>
+            <xs:element name="channel" type="xs:string"/>
+            <xs:element name="customerId">
+                <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                        <xs:totalDigits value="10"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="depositAmount" type="xs:decimal"/>
+            <xs:element name="feeDeductionAccount">
+                <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                        <xs:totalDigits value="10"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="interestPayoutAccount">
+                <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                        <xs:totalDigits value="10"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="interestRate" type="xs:decimal"/>
+            <xs:element name="maturityDate" type="xs:date"/>
+            <xs:element name="narrative" type="xs:string"/>
+            <xs:element name="penaltyRate" type="xs:decimal"/>
+            <xs:element name="productId">
+                <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                        <xs:totalDigits value="10"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="quoteCurrency" type="xs:string"/>
+            <xs:element name="settlementAccount">
+                <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                        <xs:totalDigits value="10"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="startDate" type="xs:date"/>
+            <xs:element name="status" type="xs:string"/>
+            <xs:element name="strikeRate" type="xs:decimal"/>
+            <xs:element name="termPeriod">
+                <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                        <xs:totalDigits value="11"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:schema>
+        <xs:schema xmlns="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xs:complexType name="ServiceRespHeader">
+                <xs:sequence>
+                    <xs:element ref="ns2:GlobalErrorID"/>
+                    <xs:element ref="ns2:ErrorText"/>
+                    <xs:element ref="ns2:ErrorDetails"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="ErrorDetails" type="xs:string"/>
+            <xs:element name="ErrorText" type="xs:string"/>
+            <xs:element name="GlobalErrorID" type="xs:string"/>
+            <xs:element name="ServiceRespHeader" type="ns2:ServiceRespHeader"/>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:service name="Account_DCD">
+        <wsdl:port name="Account_DCD_HTTPEndpoint" binding="tns:Account_DCD_HTTPEndpointBinding">
+            <soap:address location="http://localhost:9091/Account_DCD.serviceagent/Account_DCD_HTTPEndpoint"/>
+        </wsdl:port>
+        <wsdl:port name="Account_DCD_JMSEndpoint" binding="tns:Account_DCD_JMSEndpointBinding">
+            <soap:address location=""/>
+            <jms:connectionFactory>SMUBankQueueConnectionFactory</jms:connectionFactory>
+            <jms:targetAddress destination="queue">account.endpoint</jms:targetAddress>
+        </wsdl:port>
+    </wsdl:service>
+    <wsdl:portType name="Account_DCD">
+        <wsdl:operation name="Account_DCD_Create">
+            <wsdl:input message="tns:Account_DCD_Create-Input"/>
+            <wsdl:output message="tns:Account_DCD_Create-Output"/>
+        </wsdl:operation>
+        <wsdl:operation name="Account_DCD_Read">
+            <wsdl:input message="tns:Account_DCD_Read-Input"/>
+            <wsdl:output message="tns:Account_DCD_Read-Output"/>
+        </wsdl:operation>
+        <wsdl:operation name="Account_DCD_Update">
+            <wsdl:input message="tns:Account_DCD_Update-Input"/>
+            <wsdl:output message="tns:Account_DCD_Update-Output"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="Account_DCD_HTTPEndpointBinding" type="tns:Account_DCD">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="Account_DCD_Create">
+            <soap:operation style="rpc" soapAction="/Account_DCD.serviceagent/Account_DCD_HTTPEndpoint/Account_DCD_Create"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader Account_DCD_Create-Request"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader Account_DCD_Create-Response"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Account_DCD_Read">
+            <soap:operation style="rpc" soapAction="/Account_DCD.serviceagent/Account_DCD_HTTPEndpoint/Account_DCD_Read"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader Account_DCD_Read-Request"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader Account_DCD_Read-Response"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Account_DCD_Update">
+            <soap:operation style="rpc" soapAction="/Account_DCD.serviceagent/Account_DCD_HTTPEndpoint/Account_DCD_Update"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader Account_DCD_Update-Request"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="Account_DCD_JMSEndpointBinding" type="tns:Account_DCD">
+        <soap:binding style="rpc" transport="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS"/>
+        <jms:binding messageFormat="Text"/>
+        <wsdl:operation name="Account_DCD_Create">
+            <soap:operation style="rpc" soapAction="/Account_DCD.serviceagent/Account_DCD_JMSEndpoint/Account_DCD_Create"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader Account_DCD_Create-Request"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader Account_DCD_Create-Response"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Account_DCD_Read">
+            <soap:operation style="rpc" soapAction="/Account_DCD.serviceagent/Account_DCD_JMSEndpoint/Account_DCD_Read"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader Account_DCD_Read-Request"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader Account_DCD_Read-Response"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Account_DCD_Update">
+            <soap:operation style="rpc" soapAction="/Account_DCD.serviceagent/Account_DCD_JMSEndpoint/Account_DCD_Update"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="ServiceReqHeader Account_DCD_Update-Request"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ServiceRespHeader"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:message name="Account_DCD_Create-Input">
+        <wsdl:part name="ServiceReqHeader" type="ns0:ServiceReqHeader"/>
+        <wsdl:part name="Account_DCD_Create-Request" type="ns1:Account_DCD_Create-Request"/>
+    </wsdl:message>
+    <wsdl:message name="Account_DCD_Create-Output">
+        <wsdl:part name="ServiceRespHeader" type="ns2:ServiceRespHeader"/>
+        <wsdl:part name="Account_DCD_Create-Response" type="ns1:Account_DCD_Create-Response"/>
+    </wsdl:message>
+    <wsdl:message name="Account_DCD_Read-Input">
+        <wsdl:part name="ServiceReqHeader" type="ns0:ServiceReqHeader"/>
+        <wsdl:part name="Account_DCD_Read-Request" type="ns1:Account_DCD_Read-Request"/>
+    </wsdl:message>
+    <wsdl:message name="Account_DCD_Read-Output">
+        <wsdl:part name="ServiceRespHeader" type="ns2:ServiceRespHeader"/>
+        <wsdl:part name="Account_DCD_Read-Response" type="ns1:Account_DCD_Read-Response"/>
+    </wsdl:message>
+    <wsdl:message name="Account_DCD_Update-Input">
+        <wsdl:part name="ServiceReqHeader" type="ns0:ServiceReqHeader"/>
+        <wsdl:part name="Account_DCD_Update-Request" type="ns1:Account_DCD_Update-Request"/>
+    </wsdl:message>
+    <wsdl:message name="Account_DCD_Update-Output">
+        <wsdl:part name="ServiceRespHeader" type="ns2:ServiceRespHeader"/>
+    </wsdl:message>
+</wsdl:definitions>

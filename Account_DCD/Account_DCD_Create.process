@@ -268,7 +268,7 @@
         <pd:activity name="Check if CustomerID Exists">
             <pd:type>com.tibco.plugin.jdbc.JDBCQueryActivity</pd:type>
             <pd:resourceType>ae.activities.JDBCQueryActivity</pd:resourceType>
-            <pd:x>436</pd:x>
+            <pd:x>435</pd:x>
             <pd:y>511</pd:y>
             <config>
                 <timeout>10</timeout>
@@ -361,7 +361,7 @@
             <pd:type>com.tibco.plugin.jdbc.JDBCUpdateActivity</pd:type>
             <pd:resourceType>ae.activities.JDBCUpdateActivity</pd:resourceType>
             <pd:x>550</pd:x>
-            <pd:y>373</pd:y>
+            <pd:y>372</pd:y>
             <config>
                 <timeout>10</timeout>
                 <commit>false</commit>
@@ -453,7 +453,14 @@ values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</statement>
                         <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/Account_DCD_Create-Request/ns:productId"/>
                     </productID>
                     <interestRate>
-                        <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/Account_DCD_Create-Request/ns:interestRate"/>
+                        <xsl:choose>
+                            <xsl:when test="exists($Get-Product-Parameters/resultSet/Record[1]/interest_rate)">
+                                <xsl:value-of select="$Get-Product-Parameters/resultSet/Record[1]/interest_rate"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                            </xsl:otherwise>
+                        </xsl:choose>
                     </interestRate>
                     <currency>
                         <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/Account_DCD_Create-Request/ns:baseCurrency"/>
@@ -468,13 +475,27 @@ values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</statement>
                         <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/Account_DCD_Create-Request/ns:maturityDate"/>
                     </maturityDate>
                     <depositTerm>
-                        <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/Account_DCD_Create-Request/ns:termPeriod"/>
+                        <xsl:choose>
+                            <xsl:when test="exists($Get-Product-Parameters/resultSet/Record[1]/term)">
+                                <xsl:value-of select="$Get-Product-Parameters/resultSet/Record[1]/term"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                            </xsl:otherwise>
+                        </xsl:choose>
                     </depositTerm>
                     <balance>
                         <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/Account_DCD_Create-Request/ns:depositAmount"/>
                     </balance>
                     <penaltyRate>
-                        <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/Account_DCD_Create-Request/ns:penaltyRate"/>
+                        <xsl:choose>
+                            <xsl:when test="exists($Get-Product-Parameters/resultSet/Record[1]/penalty_rate)">
+                                <xsl:value-of select="$Get-Product-Parameters/resultSet/Record[1]/penalty_rate"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                            </xsl:otherwise>
+                        </xsl:choose>
                     </penaltyRate>
                     <currentStatus>
                         <xsl:value-of select="$Start/pfx2:Account_DCD_Create-Input/Account_DCD_Create-Request/ns:status"/>

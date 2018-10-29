@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://smubank.smu.edu.sg/schemas/Account_DCD" xmlns:ns3="http://smubank.smu.edu.sg/logging" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx2="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx="http://smubank.smu.edu.sg/Account_DCD">
+<pd:ProcessDefinition xmlns:ns2="http://smubank.smu.edu.sg/schemas/serviceResponseHeader" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://smubank.smu.edu.sg/schemas/Account_DCD" xmlns:ns3="http://smubank.smu.edu.sg/logging" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx2="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx="http://smubank.smu.edu.sg/Account_DCD">
     <wsdl:import namespace="http://smubank.smu.edu.sg/Account_DCD"/>
     <pd:name>Account_DCD_Read.process</pd:name>
     <pd:startName>Start</pd:startName>
@@ -457,7 +457,7 @@
         <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
         <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
         <pd:x>610</pd:x>
-        <pd:y>234</pd:y>
+        <pd:y>235</pd:y>
         <config>
             <variableName>Status</variableName>
         </config>
@@ -617,9 +617,11 @@ WHERE `globalerrorid` = ?;</statement>
     <pd:transition>
         <pd:from>Get Error Text</pd:from>
         <pd:to>LogPoint5</pd:to>
+        <pd:xpathDescription>Log is on</pd:xpathDescription>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$_globalVariables/pfx2:GlobalVariables/Logging/LogAll = "true" or $_globalVariables/pfx2:GlobalVariables/Logging/LogPt5 = "true"</pd:xpath>
     </pd:transition>
     <pd:transition>
         <pd:from>LogPoint5</pd:from>
@@ -633,6 +635,6 @@ WHERE `globalerrorid` = ?;</statement>
         <pd:to>End</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
+        <pd:conditionType>otherwise</pd:conditionType>
     </pd:transition>
 </pd:ProcessDefinition>
